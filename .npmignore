@@ -1,0 +1,11 @@
+.circleci/
+dist/mock-data/
+dist/*.test*
+examples/
+src/
+.prettierrc.yml
+.gitignore
+.npmignore
+.publishrc
+tsconfig.json
+coverage/
