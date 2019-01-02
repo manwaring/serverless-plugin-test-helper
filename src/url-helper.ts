@@ -4,7 +4,9 @@ import { readFileSync } from 'fs';
 const DEFAULT_KEY = 'ServiceEndpoint';
 const DEFAULT_FILE = 'infrastructure/.stack-outputs.yml';
 
-export function getDeployedUrl({ key = DEFAULT_KEY, file = DEFAULT_FILE }): string {
+export function getDeployedUrl(
+  { key = DEFAULT_KEY, file = DEFAULT_FILE } = { key: DEFAULT_KEY, file: DEFAULT_FILE }
+): string {
   console.log(`Getting the url of the deployed stack using the ${key} key in the ${file} file`);
   return getParameterFromLocalFile(key, file);
 }
