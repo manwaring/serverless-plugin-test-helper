@@ -3,7 +3,9 @@
   <img height="150" src="https://user-images.githubusercontent.com/2955468/50581158-0b705200-0e25-11e9-9fd5-0fe422e00f2e.png">
 </p>
 
-[![Build status][build-badge]][build-badge-url][![Known Vulnerabilities][vulnerability-badge]][vulnerability-badge-url][![Dependency Status][dependency-badge]][dependency-badge-url][![devDependency Status][dev-dependency-badge]][dev-dependency-badge-url][![NPM version][latest-version-badge]][latest-version-badge-url][![License][license-badge]][license-badge-url][![Code style][formatter-badge]][formatter-badge-url]
+[![NPM version][latest-version-badge]][latest-version-badge-url][![Total downloads][total-downloads-badge]][total-downloads-badge-url][![License][license-badge]][license-badge-url]
+
+[![Build status][build-badge]][build-badge-url][![Known Vulnerabilities][vulnerability-badge]][vulnerability-badge-url][![Dependency Status][dependency-badge]][dependency-badge-url][![devDependency Status][dev-dependency-badge]][dev-dependency-badge-url][![Code style][formatter-badge]][formatter-badge-url]
 
 # Serverless test helper
 
@@ -21,3 +23,5 @@
 [vulnerability-badge-url]: https://snyk.io/test/github/manwaring/serverless-test-helper?targetFile=package.json
 [latest-version-badge]: https://img.shields.io/npm/v/%40manwaring%2Fserverless-test-helper/latest.svg
 [latest-version-badge-url]: https://npmjs.com/package/@manwaring/serverless-test-helper
+[total-downloads-badge]: https://img.shields.io/npm/dt/@manwaring/serverless-test-helper.svg
+[total-downloads-badge-url]: https://www.npmjs.com/package/@manwaring/serverless-test-helper
