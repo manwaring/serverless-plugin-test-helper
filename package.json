@@ -1,7 +1,7 @@
 {
   "name": "@manwaring/serverless-test-helper",
   "description": "A utility library to help with testing deployed serverless applications",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "scripts": {
     "publish-please": "publish-please",
     "prepublishOnly": "tsc"
@@ -10,9 +10,9 @@
     "js-yaml": "^3.13.1"
   },
   "devDependencies": {
-    "@types/node": "^10.12.18",
-    "publish-please": "^5.4.3",
-    "typescript": "^3.2.2"
+    "@types/node": "^12.6.2",
+    "publish-please": "^5.5.0",
+    "typescript": "^3.5.3"
   },
   "publishConfig": {
     "access": "public"

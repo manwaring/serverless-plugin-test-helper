@@ -19,8 +19,8 @@
 [formatter-badge-url]: #badge
 [license-badge]: https://img.shields.io/npm/l/@manwaring/serverless-test-helper.svg
 [license-badge-url]: https://www.npmjs.com/package/@manwaring/serverless-test-helper
-[vulnerability-badge]: https://snyk.io/test/github/manwaring/serverless-test-helper/badge.svg?targetFile=package.json
-[vulnerability-badge-url]: https://snyk.io/test/github/manwaring/serverless-test-helper?targetFile=package.json
+[vulnerability-badge]: https://api.dependabot.com/badges/status?host=github&repo=manwaring/serverless-test-helper
+[vulnerability-badge-url]: https://dependabot.com/
 [latest-version-badge]: https://img.shields.io/npm/v/%40manwaring%2Fserverless-test-helper/latest.svg
 [latest-version-badge-url]: https://npmjs.com/package/@manwaring/serverless-test-helper
 [total-downloads-badge]: https://img.shields.io/npm/dt/@manwaring/serverless-test-helper.svg
