@@ -3,9 +3,9 @@
   <img height="150" src="https://user-images.githubusercontent.com/2955468/50581158-0b705200-0e25-11e9-9fd5-0fe422e00f2e.png">
 </p>
 
-[![version][version]][version-url] [![downloads][downloads]][downloads-url] [![license][license]][license-url] [![language][language]][language-url] [![style][style]][style-url]
+[![version][version]][version-url] [![downloads][downloads]][downloads-url] [![license][license]][license-url]
 
-[![Build][build]][build-url] [![dependabot][dependabot]][dependabot-url] [![dependencies][dependency]][dependency-url] [![dev dependencies][dev-dependency]][dev-dependency-url]
+[![Build][build]][build-url] [![dependabot][dependabot]][dependabot-url] [![dependencies][dependency]][dependency-url] [![dev dependencies][dev-dependency]][dev-dependency-url] [![language][language]][language-url] [![style][style]][style-url]
 
 # Serverless testing
 
