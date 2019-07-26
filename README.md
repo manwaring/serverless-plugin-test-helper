@@ -7,21 +7,21 @@
 
 [![Build status][build-badge]][build-badge-url][![Known Vulnerabilities][vulnerability-badge]][vulnerability-badge-url][![Dependency Status][dependency-badge]][dependency-badge-url][![devDependency Status][dev-dependency-badge]][dev-dependency-badge-url][![Code style][formatter-badge]][formatter-badge-url]
 
-# Serverless test helper
+# Serverless testing
 
-[build-badge]: https://circleci.com/gh/manwaring/serverless-test-helper.svg?style=shield&circle-token=757fe3e37ab7843d545dfd0dd2b7bbac17b82a3c
-[build-badge-url]: https://circleci.com/gh/manwaring/serverless-test-helper
-[dependency-badge]: https://david-dm.org/manwaring/serverless-test-helper.svg
-[dependency-badge-url]: https://david-dm.org/manwaring/serverless-test-helper
-[dev-dependency-badge]: https://david-dm.org/manwaring/serverless-test-helper/dev-status.svg
-[dev-dependency-badge-url]: https://david-dm.org/manwaring/serverless-test-helper?type=dev
+[build-badge]: https://circleci.com/gh/manwaring/serverless-testing.svg?style=shield&circle-token=757fe3e37ab7843d545dfd0dd2b7bbac17b82a3c
+[build-badge-url]: https://circleci.com/gh/manwaring/serverless-testing
+[dependency-badge]: https://david-dm.org/manwaring/serverless-testing.svg
+[dependency-badge-url]: https://david-dm.org/manwaring/serverless-testing
+[dev-dependency-badge]: https://david-dm.org/manwaring/serverless-testing/dev-status.svg
+[dev-dependency-badge-url]: https://david-dm.org/manwaring/serverless-testing?type=dev
 [formatter-badge]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [formatter-badge-url]: #badge
-[license-badge]: https://img.shields.io/npm/l/@manwaring/serverless-test-helper.svg
-[license-badge-url]: https://www.npmjs.com/package/@manwaring/serverless-test-helper
-[vulnerability-badge]: https://api.dependabot.com/badges/status?host=github&repo=manwaring/serverless-test-helper
+[license-badge]: https://img.shields.io/npm/l/@manwaring/serverless-testing.svg
+[license-badge-url]: https://www.npmjs.com/package/@manwaring/serverless-testing
+[vulnerability-badge]: https://api.dependabot.com/badges/status?host=github&repo=manwaring/serverless-testing
 [vulnerability-badge-url]: https://dependabot.com/
-[latest-version-badge]: https://img.shields.io/npm/v/%40manwaring%2Fserverless-test-helper/latest.svg
-[latest-version-badge-url]: https://npmjs.com/package/@manwaring/serverless-test-helper
-[total-downloads-badge]: https://img.shields.io/npm/dt/@manwaring/serverless-test-helper.svg
-[total-downloads-badge-url]: https://www.npmjs.com/package/@manwaring/serverless-test-helper
+[latest-version-badge]: https://img.shields.io/npm/v/%40manwaring%2Fserverless-testing/latest.svg
+[latest-version-badge-url]: https://npmjs.com/package/@manwaring/serverless-testing
+[total-downloads-badge]: https://img.shields.io/npm/dt/@manwaring/serverless-testing.svg
+[total-downloads-badge-url]: https://www.npmjs.com/package/@manwaring/serverless-testing

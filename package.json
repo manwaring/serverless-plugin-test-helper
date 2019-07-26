@@ -25,12 +25,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/manwaring/serverless-test-helper.git"
+    "url": "git+https://github.com/manwaring/serverless-testing.git"
   },
   "bugs": {
-    "url": "https://github.com/manwaring/serverless-test-helper"
+    "url": "https://github.com/manwaring/serverless-testing"
   },
-  "homepage": "https://github.com/manwaring/serverless-test-helper",
+  "homepage": "https://github.com/manwaring/serverless-testing",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "author": "From Phillip with ♥",
