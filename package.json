@@ -1,5 +1,5 @@
 {
-  "name": "serverless-test-helper",
+  "name": "serverless-testing",
   "description": "A utility library to help with testing deployed serverless applications",
   "version": "0.0.1",
   "scripts": {
