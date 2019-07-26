@@ -1,17 +1,22 @@
 {
   "name": "@manwaring/serverless-test-helper",
   "description": "A utility library to help with testing deployed serverless applications",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "scripts": {
-    "publish-please": "publish-please",
-    "prepublishOnly": "tsc"
+    "publish": "npm run build && publish-please",
+    "build": "rimraf dist/ && tsc",
+    "postbuild": "ncp src/index.d.ts dist/index.d.ts"
   },
   "dependencies": {
-    "js-yaml": "^3.13.1"
+    "js-yaml": "^3.13.1",
+    "tomlify-j0.4": "^3.0.0",
+    "yamljs": "^0.3.0"
   },
   "devDependencies": {
     "@types/node": "^12.6.2",
+    "ncp": "^2.0.0",
     "publish-please": "^5.5.0",
+    "rimraf": "^2.6.3",
     "typescript": "^3.5.3"
   },
   "publishConfig": {

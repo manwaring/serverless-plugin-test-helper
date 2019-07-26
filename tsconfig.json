@@ -3,8 +3,9 @@
     "target": "es6",
     "lib": ["es2017", "es7", "es6"],
     "module": "commonjs",
-    "declaration": true,
-    "outDir": "dist"
+    "declaration": false,
+    "outDir": "dist",
+    "typeRoots": ["node_modules/@types", "typings"]
   },
   "exclude": ["node_modules", "dist"]
 }
