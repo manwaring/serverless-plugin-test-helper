@@ -3,7 +3,8 @@
   "description": "A utility library to help with testing deployed serverless applications",
   "version": "0.0.7",
   "scripts": {
-    "publish": "npm run build && publish-please",
+    "publish": "publish-please",
+    "prepublishOnly": "npm run build",
     "build": "rimraf dist/ && tsc",
     "postbuild": "ncp src/index.d.ts dist/index.d.ts"
   },
