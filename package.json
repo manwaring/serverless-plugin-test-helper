@@ -1,23 +1,33 @@
 {
   "name": "serverless-testing",
   "description": "A utility library to help with testing deployed serverless applications",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "scripts": {
     "publish-please": "publish-please",
     "prepublishOnly": "publish-please guard && npm run build",
-    "build": "rimraf dist/ && tsc",
-    "postbuild": "ncp src/index.d.ts dist/index.d.ts"
+    "build": "rimraf dist/ && tsc -p ./tsconfig.build.json",
+    "postbuild": "ncp src/index.d.ts dist/index.d.ts",
+    "test": "nyc node_modules/cucumber/bin/cucumber-js -p default",
+    "posttest": "nyc report --reporter=json --reporter=lcov",
+    "codecov": "codecov -f coverage/*.json"
   },
   "dependencies": {
     "js-yaml": "^3.13.1",
-    "tomlify-j0.4": "^3.0.0",
-    "yamljs": "^0.3.0"
+    "tomlify-j0.4": "^3.0.0"
   },
   "devDependencies": {
     "@types/node": "^12.6.2",
+    "chai": "^4.2.0",
+    "codecov": "^3.5.0",
+    "cucumber": "^5.1.0",
+    "cucumber-pretty": "^1.5.2",
+    "cucumber-tsflow": "^3.2.0",
     "ncp": "^2.0.0",
+    "nyc": "^14.1.1",
     "publish-please": "^5.5.0",
     "rimraf": "^2.6.3",
+    "ts-loader": "^6.0.4",
+    "ts-node": "^8.3.0",
     "typescript": "^3.5.3"
   },
   "publishConfig": {

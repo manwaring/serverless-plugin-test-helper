@@ -1,6 +1,6 @@
-import * as fs from 'fs';
+import { writeFileSync } from 'fs';
 
-export default class StackOutputFile {
+export class StackOutputFile {
   constructor(public path: string) {}
 
   public format(data: object) {
@@ -10,12 +10,12 @@ export default class StackOutputFile {
       case 'JSON':
         return JSON.stringify(data, null, 2);
       case 'TOML':
-        return require('tomlify-j0.4')(data, null, 0);
+        return require('tomlify-j0.4').toToml(data, null, 0);
       case 'YAML':
       case 'YML':
-        return require('yamljs').stringify(data);
+        return require('js-yaml').safeDump(data);
       default:
-        throw new Error('No formatter found for `' + ext + '` extension');
+        throw new Error(`No formatter found for '${ext}' extension`);
     }
   }
 
@@ -23,7 +23,7 @@ export default class StackOutputFile {
     const content = this.format(data);
 
     try {
-      fs.writeFileSync(this.path, content);
+      writeFileSync(this.path, content);
     } catch (e) {
       throw new Error('Cannot write to file: ' + this.path);
     }

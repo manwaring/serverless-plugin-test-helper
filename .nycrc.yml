@@ -1,0 +1,8 @@
+extension:
+  - .ts
+  - .js
+
+exclude:
+  - cucumber.js
+  - src/**/*.cucumber*
+  - src/**/*.js*

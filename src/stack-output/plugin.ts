@@ -1,7 +1,7 @@
 import * as assert from 'assert';
 import * as util from 'util';
 
-import StackOutputFile from './file';
+import { StackOutputFile } from './file';
 
 export class StackOutputPlugin {
   public hooks: {};
