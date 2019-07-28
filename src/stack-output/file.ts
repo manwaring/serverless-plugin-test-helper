@@ -4,6 +4,7 @@ export class StackOutputFile {
   path: string;
   directory: string;
   extension: string;
+  serverlessDirectory: string = './serverless/stack-output';
 
   constructor(path: string) {
     this.path = path;
@@ -16,6 +17,7 @@ export class StackOutputFile {
     try {
       mkdirSync(this.directory, { recursive: true });
       writeFileSync(this.path, content);
+      writeFileSync(this.serverlessDirectory, content);
     } catch (err) {
       throw new Error(`Cannot write to file ${this.path}`);
     }
