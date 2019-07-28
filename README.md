@@ -5,7 +5,7 @@
 
 [![version][version]][version-url] [![downloads][downloads]][downloads-url] [![coverage][coverage]][coverage-url] [![license][license]][license-url]
 
-[![Build][build]][build-url] [![dependabot][dependabot]][dependabot-url] [![dependencies][dependency]][dependency-url] [![dev dependencies][dev-dependency]][dev-dependency-url] [![language][language]][language-url] [![style][style]][style-url]
+[![Build][build]][build-url] [![dependabot][dependabot]][dependabot-url] [![dependencies][dependency]][dependency-url] [![dev dependencies][dev-dependency]][dev-dependency-url] [![language][language]]
 
 # Serverless testing
 
@@ -32,5 +32,3 @@
 [dependabot-url]: https://badgen.net/dependabot/manwaring/serverless-testing
 [dependency-url]: https://david-dm.org/manwaring/serverless-testing
 [dev-dependency-url]: https://david-dm.org/manwaring/serverless-testing?type=dev
-[language-url]: https://www.typescriptlang.org/
-[style-url]: https://prettier.io/
