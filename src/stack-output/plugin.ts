@@ -1,6 +1,5 @@
 import { ok, deepStrictEqual } from 'assert';
 import { format } from 'util';
-
 import { StackOutputFile } from './file';
 
 export class StackOutputPlugin {

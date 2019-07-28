@@ -1,4 +1,4 @@
-Feature: Basic file config
+Feature: Stack output file configuration
 
   Scenario: Basic class instantiation
     Given a directory

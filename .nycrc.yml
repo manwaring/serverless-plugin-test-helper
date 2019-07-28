@@ -1,8 +1,12 @@
-extension:
-  - .ts
-  - .js
+# extends: '@istanbuljs/nyc-config-typescript'
+all: true
+cache: false
 
 exclude:
-  - cucumber.js
-  - src/**/*.cucumber*
-  - src/**/*.js*
+  - '**/*cucumber*'
+  - '**/*.d.ts'
+  - '**/*index.ts'
+  - coverage/**
+
+extension:
+  - .ts
