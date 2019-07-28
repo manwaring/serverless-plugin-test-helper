@@ -1,30 +1,21 @@
-import * as assert from 'assert';
-import * as util from 'util';
+import { ok, deepStrictEqual } from 'assert';
+import { format } from 'util';
 
 import { StackOutputFile } from './file';
 
 export class StackOutputPlugin {
   public hooks: {};
   private output: OutputConfig;
+  private file: string;
+  private handler: string;
+  private stackName: string;
 
   constructor(private serverless: Serverless, private options: Serverless.Options) {
-    this.hooks = {
-      'after:deploy:deploy': this.process.bind(this)
-    };
-
+    this.hooks = { 'after:deploy:deploy': this.process.bind(this) };
     this.output = this.serverless.service.custom.output;
-  }
-
-  get file() {
-    return this.getConfig('file');
-  }
-
-  get handler() {
-    return this.getConfig('handler');
-  }
-
-  get stackName() {
-    return util.format(
+    this.file = this.getConfig('file');
+    this.handler = this.getConfig('handler');
+    this.stackName = format(
       '%s-%s',
       this.serverless.service.getServiceName(),
       this.serverless.getProvider('aws').getStage()
@@ -44,7 +35,7 @@ export class StackOutputPlugin {
   }
 
   private getConfig(key: string) {
-    return util.format('%s/%s', this.serverless.config.servicePath, this.output[key]);
+    return format('%s/%s', this.serverless.config.servicePath, this.output[key]);
   }
 
   private callHandler(data: object) {
@@ -92,7 +83,7 @@ export class StackOutputPlugin {
   private handleHandler(data: object) {
     return this.hasHandler()
       ? this.callHandler(data).then(() =>
-          this.serverless.cli.log(util.format('Stack Output processed with handler: %s', this.output.handler))
+          this.serverless.cli.log(format('Stack Output processed with handler: %s', this.output.handler))
         )
       : Promise.resolve();
   }
@@ -100,19 +91,18 @@ export class StackOutputPlugin {
   private handleFile(data: object) {
     return this.hasFile()
       ? this.saveFile(data).then(() =>
-          this.serverless.cli.log(util.format('Stack Output saved to file: %s', this.output.file))
+          this.serverless.cli.log(format('Stack Output saved to file: %s', this.output.file))
         )
       : Promise.resolve();
   }
 
   private validate() {
-    assert(this.serverless, 'Invalid serverless configuration');
-    assert(this.serverless.service, 'Invalid serverless configuration');
-    assert(this.serverless.service.provider, 'Invalid serverless configuration');
-    assert(this.serverless.service.provider.name, 'Invalid serverless configuration');
-    assert(this.serverless.service.provider.name === 'aws', 'Only supported for AWS provider');
-
-    assert(this.options && !this.options.noDeploy, 'Skipping deployment with --noDeploy flag');
+    ok(this.serverless, 'Invalid serverless configuration');
+    ok(this.serverless.service, 'Invalid serverless configuration');
+    ok(this.serverless.service.provider, 'Invalid serverless configuration');
+    ok(this.serverless.service.provider.name, 'Invalid serverless configuration');
+    deepStrictEqual(this.serverless.service.provider.name, 'aws', 'Only supported for AWS provider');
+    ok(this.options && !this.options.noDeploy, 'Skipping deployment with --noDeploy flag');
   }
 
   private process() {
@@ -121,6 +111,6 @@ export class StackOutputPlugin {
       .then(() => this.fetch())
       .then(res => this.beautify(res))
       .then(res => this.handle(res))
-      .catch(err => this.serverless.cli.log(util.format('Cannot process Stack Output: %s!', err.message)));
+      .catch(err => this.serverless.cli.log(format('Cannot process Stack Output: %s!', err.message)));
   }
 }

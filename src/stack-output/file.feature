@@ -1,17 +1,29 @@
 Feature: Basic file config
 
-  # Scenario: Basic constructor config
-  #   Given a directory
-  #   Then the directory is saved correctly
+  Scenario: Basic class instantiation
+    Given a directory
+    Then the directory is saved correctly
   
-  Scenario Outline: Formatting works correctly for all file types
-    Given '<valid>' '<file>' of '<type>' with <data> 
-    Then the correct file format is determined
+  Scenario Outline: Data is formatted correctly for all supported file types
+    Given desired output file of type '<type>' 
+    Then <input> is '<outcome>' into <output>
     
     Examples:
-      | valid | file       | type | data                   |
-      | true  | test.yaml  | yaml | 'foo: bar\n'           |
-      | true  | test.yml   | yaml | 'foo: bar\n'           |
-      | true  | test.json  | json | '{\n  "foo": "bar"\n}' |
-      | true  | test.toml  | toml | 'foo = "bar"'          |
-      # | false | test.zip   |      |                    |
+      | type | input            | outcome       | output                 |
+      | yaml | '{"foo": "bar"}' | formatted     | 'foo: bar\n'           |
+      | yml  | '{"foo": "bar"}' | formatted     | 'foo: bar\n'           |
+      | json | '{"foo": "bar"}' | formatted     | '{\n  "foo": "bar"\n}' |
+      | toml | '{"foo": "bar"}' | formatted     | 'foo = "bar"'          |
+      | zip  | '{"foo": "bar"}' | not formatted | 'anything'             |
+  
+  Scenario Outline: Output file is successfully written
+    Given desired output directory '<directory>' and file '<file>'
+    Then <input> is '<outcome>' to '<directory>'
+
+    Examples:
+      | directory   | file       | input            | outcome     |
+      | .test-output | test.yaml | '{"foo": "bar"}' | written     |
+      | .test-output | test.yml  | '{"foo": "bar"}' | written     |
+      | .test-output | test.json | '{"foo": "bar"}' | written     |
+      | .test-output | test.toml | '{"foo": "bar"}' | written     |
+      | .test-output | test.zip  | '{"foo": "bar"}' | not written |

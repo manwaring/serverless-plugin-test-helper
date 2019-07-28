@@ -1,12 +1,29 @@
-import { writeFileSync } from 'fs';
+import { writeFileSync, mkdirSync } from 'fs';
 
 export class StackOutputFile {
-  constructor(public path: string) {}
+  path: string;
+  directory: string;
+  extension: string;
+
+  constructor(path: string) {
+    this.path = path;
+    this.directory = path.match(/.*\//) ? path.match(/.*\//)[0] : '';
+    this.extension = path.split('.').pop() || '';
+  }
+
+  public save(data: object) {
+    const content = this.format(data);
+    try {
+      mkdirSync(this.directory, { recursive: true });
+      writeFileSync(this.path, content);
+    } catch (err) {
+      throw new Error(`Cannot write to file ${this.path}`);
+    }
+    return Promise.resolve();
+  }
 
   public format(data: object) {
-    const ext = this.path.split('.').pop() || '';
-
-    switch (ext.toUpperCase()) {
+    switch (this.extension.toUpperCase()) {
       case 'JSON':
         return JSON.stringify(data, null, 2);
       case 'TOML':
@@ -15,19 +32,7 @@ export class StackOutputFile {
       case 'YML':
         return require('js-yaml').safeDump(data);
       default:
-        throw new Error(`No formatter found for '${ext}' extension`);
+        throw new Error(`No formatter found for '${this.extension}' extension`);
     }
-  }
-
-  public save(data: object) {
-    const content = this.format(data);
-
-    try {
-      writeFileSync(this.path, content);
-    } catch (e) {
-      throw new Error('Cannot write to file: ' + this.path);
-    }
-
-    return Promise.resolve();
   }
 }

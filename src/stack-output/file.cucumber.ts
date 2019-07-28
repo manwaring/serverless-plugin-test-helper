@@ -1,41 +1,56 @@
+import { existsSync } from 'fs';
 import { binding, then, given } from 'cucumber-tsflow';
 import { expect } from 'chai';
 import { StackOutputFile } from './file';
 
 @binding()
 class StackOutputFileTest {
-  stackOutputFile: StackOutputFile;
+  file: StackOutputFile;
   directory: string;
-  information: { valid: boolean; file: string; type: string; data: any };
 
   @given(/a directory/)
   public givenDirectory() {
     const directory = __dirname;
-    this.stackOutputFile = new StackOutputFile(directory);
+    this.file = new StackOutputFile(directory);
     this.directory = directory;
   }
 
   @then(/the directory is saved correctly/)
   public directorySaved() {
-    expect(this.stackOutputFile.path).to.equal(this.directory);
+    expect(this.file.path).to.equal(this.directory);
   }
 
-  @given(/'([^"]*)' '([^"]*)' of '([^"]*)' with '(.*)'/s)
-  public configuredFormatter(valid: boolean, file: string, type: string, data: any) {
-    const information = { valid, file, type, data };
-    this.stackOutputFile = new StackOutputFile(information.file);
-    this.information = information;
+  @given(/desired output file of type '([^"]*)'/)
+  public configuredFormatter(type: string) {
+    this.file = new StackOutputFile(`test.${type}`);
   }
 
-  @then(/the correct file format is determined/)
-  public fileFormatDetected() {
-    const output = { foo: 'bar' };
-    if (this.information.valid) {
-      expect(this.stackOutputFile.format(output)).to.equal(this.information.data);
+  @then(/'(.*)' is '([^"]*)' into '(.*)'/s)
+  public turnsInputIntoValidOutput(inputString: string, outcome: string, output: string) {
+    const input = JSON.parse(inputString);
+    const valid = outcome.toUpperCase() === 'FORMATTED' ? true : false;
+    if (valid) {
+      expect(this.file.format(input)).to.equal(output);
     } else {
       expect(function() {
-        this.stackOutputFile.format(output);
+        this.file.format(input);
       }).to.throw();
+    }
+  }
+
+  @given(/desired output directory '([^"]*)' and file '([^"]*)'/)
+  public givenDirectoryAndFile(directory: string, file: string) {
+    this.file = new StackOutputFile(`${directory}/${file}`);
+  }
+
+  @then(/'(.*)' is '([^"]*)' to '([^"]*)'/s)
+  public async successfullyWritten(inputString: string, outcome: string, directory: string) {
+    const input = JSON.parse(inputString);
+    const valid = outcome.toUpperCase() === 'WRITTEN' ? true : false;
+    if (valid) {
+      await this.file.save(input);
+      const exists = existsSync(this.file.path);
+      expect(exists).to.be.true;
     }
   }
 }
