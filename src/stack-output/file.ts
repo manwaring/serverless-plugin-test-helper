@@ -19,10 +19,14 @@ export class StackOutputFile {
     try {
       mkdirSync(this.directory, { recursive: true });
       writeFileSync(this.path, content);
+    } catch (err) {
+      throw new Error(`Cannot write to file ${this.path}`);
+    }
+    try {
       mkdirSync(this.serverlessDirectory, { recursive: true });
       writeFileSync(`${this.serverlessDirectory}/${this.file}`, content);
     } catch (err) {
-      throw new Error(`Cannot write to file ${this.path}`);
+      throw new Error(`Cannot write to file ${this.serverlessDirectory}/${this.file}`);
     }
     return Promise.resolve();
   }
