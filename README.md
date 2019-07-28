@@ -7,7 +7,7 @@
 
 [![Build][build]][build-url] [![dependabot][dependabot]][dependabot-url] [![dependencies][dependency]][dependency-url] [![dev dependencies][dev-dependency]][dev-dependency-url]
 
-# Serverless testing
+# Serverless plugin test helper
 
 <!-- Badge icons -->
 
