@@ -11,24 +11,24 @@
 
 <!-- Badge icons -->
 
-[version]: https://badgen.net/npm/v/serverless-testing?icon=npm&label=npm+version
-[downloads]: https://badgen.net/npm/dt/serverless-testing?icon=npm
-[coverage]: https://badgen.net/codecov/c/github/manwaring/serverless-testing/?icon=codecov
-[license]: https://badgen.net/npm/license/serverless-testing/?color=pink
+[version]: https://badgen.net/npm/v/serverless-plugin-test-helper?icon=npm&label=npm+version
+[downloads]: https://badgen.net/npm/dt/serverless-plugin-test-helper?icon=npm
+[coverage]: https://badgen.net/codecov/c/github/manwaring/serverless-plugin-test-helper/?icon=codecov
+[license]: https://badgen.net/npm/license/serverless-plugin-test-helper/?color=pink
 [language]: https://badgen.net/badge/typescript/typescript/?icon&label
 [style]: https://badgen.net/badge/code%20style/prettier?color=purple&icon=terminal&label
-[build]: https://badgen.net/circleci/github/manwaring/serverless-testing/master?icon=circleci
-[dependabot]: https://badgen.net/dependabot/manwaring/serverless-testing/?icon=dependabot&label=dependabot
-[dependency]: https://badgen.net/david/dep/manwaring/serverless-testing
-[dev-dependency]: https://badgen.net/david/dev/manwaring/serverless-testing/?label=dev+dependencies
+[build]: https://badgen.net/circleci/github/manwaring/serverless-plugin-test-helper/master?icon=circleci
+[dependabot]: https://badgen.net/dependabot/manwaring/serverless-plugin-test-helper/?icon=dependabot&label=dependabot
+[dependency]: https://badgen.net/david/dep/manwaring/serverless-plugin-test-helper
+[dev-dependency]: https://badgen.net/david/dev/manwaring/serverless-plugin-test-helper/?label=dev+dependencies
 
 <!-- Badge URLs -->
 
-[version-url]: https://npmjs.com/package/serverless-testing
-[downloads-url]: https://www.npmjs.com/package/serverless-testing
-[coverage-url]: https://codecov.io/gh/manwaring/serverless-testing
-[license-url]: https://www.npmjs.com/package/serverless-testing
-[build-url]: https://circleci.com/gh/manwaring/serverless-testing
-[dependabot-url]: https://badgen.net/dependabot/manwaring/serverless-testing
-[dependency-url]: https://david-dm.org/manwaring/serverless-testing
-[dev-dependency-url]: https://david-dm.org/manwaring/serverless-testing?type=dev
+[version-url]: https://npmjs.com/package/serverless-plugin-test-helper
+[downloads-url]: https://www.npmjs.com/package/serverless-plugin-test-helper
+[coverage-url]: https://codecov.io/gh/manwaring/serverless-plugin-test-helper
+[license-url]: https://www.npmjs.com/package/serverless-plugin-test-helper
+[build-url]: https://circleci.com/gh/manwaring/serverless-plugin-test-helper
+[dependabot-url]: https://badgen.net/dependabot/manwaring/serverless-plugin-test-helper
+[dependency-url]: https://david-dm.org/manwaring/serverless-plugin-test-helper
+[dev-dependency-url]: https://david-dm.org/manwaring/serverless-plugin-test-helper?type=dev
