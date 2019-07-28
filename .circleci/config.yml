@@ -35,6 +35,20 @@ jobs:
           paths:
             - node_modules
 
+  test:
+    <<: *container-config
+    steps:
+      - checkout
+      - *load-cache
+      - run:
+          name: Test
+          command: npm test
+      - store_artifacts:
+          path: coverage
+      - run:
+          name: Send coverage to Codecov
+          command: npm run codecov
+
   publish:
     <<: *container-config
     steps:
@@ -52,10 +66,13 @@ workflows:
   build_and_test:
     jobs:
       - install
+      - test:
+          requires:
+            - install
       - publish:
           context: manwaring-npm
           requires:
-            - install
+            - test
           filters:
             branches:
               only: master

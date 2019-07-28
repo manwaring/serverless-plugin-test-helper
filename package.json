@@ -1,7 +1,7 @@
 {
   "name": "serverless-testing",
   "description": "A utility library to help with testing deployed serverless applications",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "scripts": {
     "publish-please": "publish-please",
     "prepublishOnly": "publish-please guard && npm run build",
