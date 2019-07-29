@@ -4,14 +4,13 @@ export class StackOutputFile {
   path: string;
   directory: string;
   extension: string;
-  file: string;
-  serverlessDirectory: string = '.serverless/stack-output';
+  testingDirectory: string = '.serverless/stack-output';
+  testingPath: string = '.serverless/stack-output/outputs.yml';
 
   constructor(path: string) {
     this.path = path;
     this.directory = path.match(/.*\//) ? path.match(/.*\//)[0] : '';
     this.extension = path.split('.').pop() || '';
-    this.file = path.match(/\/.*/) ? path.match(/\/.*/)[0] : '';
   }
 
   public save(data: object) {
@@ -23,10 +22,10 @@ export class StackOutputFile {
       throw new Error(`Cannot write to file ${this.path}`);
     }
     try {
-      mkdirSync(this.serverlessDirectory, { recursive: true });
-      writeFileSync(`${this.serverlessDirectory}/${this.file}`, content);
+      mkdirSync(this.testingDirectory, { recursive: true });
+      writeFileSync(this.testingPath, content);
     } catch (err) {
-      throw new Error(`Cannot write to file ${this.serverlessDirectory}/${this.file}`);
+      throw new Error(`Cannot write to file ${this.testingPath}`);
     }
     return Promise.resolve();
   }

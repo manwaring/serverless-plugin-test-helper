@@ -43,14 +43,16 @@ class StackOutputFileTest {
     this.file = new StackOutputFile(`${directory}/${file}`);
   }
 
-  @then(/'(.*)' is '([^"]*)' to '([^"]*)'/s)
-  public async successfullyWritten(inputString: string, outcome: string, directory: string) {
+  @then(/'(.*)' is '([^"]*)' to .serverless and '([^"]*)' '([^"]*)'/s)
+  public async successfullyWritten(inputString: string, outcome: string, directory: string, file: string) {
     const input = JSON.parse(inputString);
     const valid = outcome.toUpperCase() === 'WRITTEN' ? true : false;
     if (valid) {
       await this.file.save(input);
-      const exists = existsSync(this.file.path);
-      expect(exists).to.be.true;
+      const existsInSpecifiedLocation = existsSync(`${directory}/${file}`);
+      const existsInServerlessDirectory = existsSync(this.file.testingPath);
+      expect(existsInSpecifiedLocation).to.be.true;
+      expect(existsInServerlessDirectory).to.be.true;
     }
   }
 }
