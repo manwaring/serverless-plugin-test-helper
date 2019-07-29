@@ -1,7 +1,7 @@
 import { existsSync } from 'fs';
 import { binding, then, given } from 'cucumber-tsflow';
 import { expect } from 'chai';
-import { StackOutputFile } from './file';
+import { StackOutputFile, TESTING_OUTPUTS_PATH } from './file';
 
 @binding()
 class StackOutputFileTest {
@@ -50,7 +50,7 @@ class StackOutputFileTest {
     if (valid) {
       await this.file.save(input);
       const existsInSpecifiedLocation = existsSync(`${directory}/${file}`);
-      const existsInServerlessDirectory = existsSync(this.file.testingPath);
+      const existsInServerlessDirectory = existsSync(TESTING_OUTPUTS_PATH);
       expect(existsInSpecifiedLocation).to.be.true;
       expect(existsInServerlessDirectory).to.be.true;
     }

@@ -1,14 +1,14 @@
 import { safeLoad } from 'js-yaml';
 import { readFileSync } from 'fs';
+import { TESTING_OUTPUTS_PATH } from '../stack-output/file';
 
 const DEFAULT_KEY = 'ServiceEndpoint';
-const DEFAULT_FILE = 'infrastructure/.stack-outputs.yml';
 
 export function getDeployedUrl(
-  { key = DEFAULT_KEY, file = DEFAULT_FILE } = { key: DEFAULT_KEY, file: DEFAULT_FILE }
+  { key = DEFAULT_KEY, path = TESTING_OUTPUTS_PATH } = { key: DEFAULT_KEY, path: TESTING_OUTPUTS_PATH }
 ): string {
-  console.log(`Getting the url of the deployed stack using the ${key} key in the ${file} file`);
-  return getParameterFromLocalFile(key, file);
+  console.log(`Getting the url of the deployed stack using the ${key} key in the ${path} file`);
+  return getParameterFromLocalFile(key, path);
 }
 
 function getParameterFromLocalFile(key: string, directory: string): string {

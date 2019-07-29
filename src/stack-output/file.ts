@@ -1,11 +1,12 @@
 import { writeFileSync, mkdirSync } from 'fs';
 
+const TESTING_OUTPUTS_DIRECTORY: string = '.serverless/stack-output';
+export const TESTING_OUTPUTS_PATH: string = '.serverless/stack-output/outputs.yml';
+
 export class StackOutputFile {
   path: string;
   directory: string;
   extension: string;
-  testingDirectory: string = '.serverless/stack-output';
-  testingPath: string = '.serverless/stack-output/outputs.yml';
 
   constructor(path: string) {
     this.path = path;
@@ -22,10 +23,10 @@ export class StackOutputFile {
       throw new Error(`Cannot write to file ${this.path}`);
     }
     try {
-      mkdirSync(this.testingDirectory, { recursive: true });
-      writeFileSync(this.testingPath, content);
+      mkdirSync(TESTING_OUTPUTS_DIRECTORY, { recursive: true });
+      writeFileSync(TESTING_OUTPUTS_PATH, content);
     } catch (err) {
-      throw new Error(`Cannot write to file ${this.testingPath}`);
+      throw new Error(`Cannot write to file ${TESTING_OUTPUTS_PATH}`);
     }
     return Promise.resolve();
   }
