@@ -14,7 +14,7 @@
 [version]: https://badgen.net/npm/v/serverless-plugin-test-helper?icon=npm&label=npm+version
 [downloads]: https://badgen.net/npm/dt/serverless-plugin-test-helper?icon=npm
 [coverage]: https://badgen.net/codecov/c/github/manwaring/serverless-plugin-test-helper/?icon=codecov
-[license]: https://badgen.net/npm/license/serverless-plugin-test-helper/?color=pink
+[license]: https://badgen.net/npm/license/serverless-plugin-test-helper/
 [language]: https://badgen.net/badge/typescript/typescript/?icon&label
 [style]: https://badgen.net/badge/code%20style/prettier?color=purple&icon=terminal&label
 [build]: https://badgen.net/circleci/github/manwaring/serverless-plugin-test-helper/master?icon=circleci
