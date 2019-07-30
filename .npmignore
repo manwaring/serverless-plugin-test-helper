@@ -4,6 +4,7 @@
 coverage/
 dist/**/*.cucumber*
 src/
+typings/
 .gitignore
 .npmignore
 .nycrc.yml
