@@ -71,7 +71,7 @@ TODO sample hello world project in the repo?
 
 <!-- Badge icons -->
 
-[version]: https://badgen.net/npm/v/serverless-plugin-test-helper?icon=npm&label=npm+version
+[version]: https://badgen.net/npm/v/serverless-plugin-test-helper?icon=npm&label=npm@latest
 [downloads]: https://badgen.net/npm/dt/serverless-plugin-test-helper?icon=npm
 [coverage]: https://badgen.net/codecov/c/github/manwaring/serverless-plugin-test-helper/?icon=codecov
 [license]: https://badgen.net/npm/license/serverless-plugin-test-helper/

@@ -3,6 +3,7 @@
 .nyc_output/
 coverage/
 dist/**/*.cucumber*
+dist/**/*/mock-data/**
 src/
 typings/
 .gitignore

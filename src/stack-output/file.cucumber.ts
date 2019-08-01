@@ -32,7 +32,7 @@ class StackOutputFileTest {
     if (valid) {
       expect(this.file.format(input)).to.equal(output);
     } else {
-      expect(function() {
+      expect(() => {
         this.file.format(input);
       }).to.throw();
     }

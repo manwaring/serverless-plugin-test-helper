@@ -54,6 +54,8 @@ declare interface Serverless {
     servicePath: string;
   };
 
+  region: string;
+
   service: {
     getServiceName(): string;
     getAllFunctions(): string[];

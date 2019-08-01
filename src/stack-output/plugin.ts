@@ -21,23 +21,23 @@ export class StackOutputPlugin {
     );
   }
 
-  private hasConfig(key: string) {
+  public hasConfig(key: string) {
     return !!this.output && !!this.output[key];
   }
 
-  private hasHandler() {
+  public hasHandler() {
     return this.hasConfig('handler');
   }
 
-  private hasFile() {
+  public hasFile() {
     return this.hasConfig('file');
   }
 
-  private getConfig(key: string) {
+  public getConfig(key: string) {
     return format('%s/%s', this.serverless.config.servicePath, this.output[key]);
   }
 
-  private callHandler(data: object) {
+  public callHandler(data: object) {
     const splits = this.handler.split('.');
     const func = splits.pop() || '';
     const file = splits.join('.');
@@ -47,13 +47,12 @@ export class StackOutputPlugin {
     return Promise.resolve(res);
   }
 
-  private saveFile(data: object) {
+  public saveFile(data: object) {
     const f = new StackOutputFile(this.file);
-
     return f.save(data);
   }
 
-  private fetch(): Promise<StackDescriptionList> {
+  public fetch(): Promise<StackDescriptionList> {
     return this.serverless
       .getProvider('aws')
       .request(
@@ -65,7 +64,7 @@ export class StackOutputPlugin {
       );
   }
 
-  private beautify(data: { Stacks: Array<{ Outputs: StackOutputPair[] }> }) {
+  public beautify(data: { Stacks: Array<{ Outputs: StackOutputPair[] }> }) {
     const stack = data.Stacks.pop() || { Outputs: [] };
     const output = stack.Outputs || [];
 
@@ -75,11 +74,11 @@ export class StackOutputPlugin {
     );
   }
 
-  private handle(data: object) {
+  public handle(data: object) {
     return Promise.all([this.handleHandler(data), this.handleFile(data)]);
   }
 
-  private handleHandler(data: object) {
+  public handleHandler(data: object) {
     return this.hasHandler()
       ? this.callHandler(data).then(() =>
           this.serverless.cli.log(format('Stack Output processed with handler: %s', this.output.handler))
@@ -87,7 +86,7 @@ export class StackOutputPlugin {
       : Promise.resolve();
   }
 
-  private handleFile(data: object) {
+  public handleFile(data: object) {
     return this.hasFile()
       ? this.saveFile(data).then(() =>
           this.serverless.cli.log(format('Stack Output saved to file: %s', this.output.file))
@@ -95,7 +94,7 @@ export class StackOutputPlugin {
       : Promise.resolve();
   }
 
-  private validate() {
+  public validate() {
     ok(this.serverless, 'Invalid serverless configuration');
     ok(this.serverless.service, 'Invalid serverless configuration');
     ok(this.serverless.service.provider, 'Invalid serverless configuration');
@@ -104,7 +103,7 @@ export class StackOutputPlugin {
     ok(this.options && !this.options.noDeploy, 'Skipping deployment with --noDeploy flag');
   }
 
-  private process() {
+  public process() {
     return Promise.resolve()
       .then(() => this.validate())
       .then(() => this.fetch())

@@ -6,6 +6,7 @@ exclude:
   - '**/*cucumber*'
   - '**/*.d.ts'
   - '**/*index.ts'
+  - '**/*/mock-data/**'
   - coverage/**
 
 extension:
