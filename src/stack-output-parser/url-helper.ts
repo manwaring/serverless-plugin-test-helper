@@ -4,11 +4,9 @@ import { TESTING_OUTPUTS_PATH } from '../stack-output/plugin';
 
 const DEFAULT_KEY = 'ServiceEndpoint';
 
-export function getDeployedUrl(
-  { key = DEFAULT_KEY, path = TESTING_OUTPUTS_PATH } = { key: DEFAULT_KEY, path: TESTING_OUTPUTS_PATH }
-): string {
-  console.log(`Getting the url of the deployed stack using the ${key} key in the ${path} file`);
-  return getParameterFromLocalFile(key, path);
+export function getDeployedUrl(): string {
+  console.log(`Getting the url of the deployed stack using the ${DEFAULT_KEY} key in the ${TESTING_OUTPUTS_PATH} file`);
+  return getParameterFromLocalFile(DEFAULT_KEY, TESTING_OUTPUTS_PATH);
 }
 
 function getParameterFromLocalFile(key: string, directory: string): string {
