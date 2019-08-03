@@ -1,6 +1,6 @@
 import { safeLoad } from 'js-yaml';
 import { readFileSync } from 'fs';
-import { TESTING_OUTPUTS_PATH } from '../stack-output/file';
+import { TESTING_OUTPUTS_PATH } from '../stack-output/plugin';
 
 const DEFAULT_KEY = 'ServiceEndpoint';
 

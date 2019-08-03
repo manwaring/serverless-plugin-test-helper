@@ -15,7 +15,6 @@ export const customOptions: Serverless.Options = {
   region: ''
 };
 
-// let customServerless = JSON.parse(JSON.stringify(defaultServerless));
 let customServerless = Object.assign(defaultServerless);
 customServerless.service.custom.testHelper = { path };
 export { customServerless };
