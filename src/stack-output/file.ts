@@ -26,8 +26,6 @@ export class StackOutputFile {
     switch (this.extension.toUpperCase()) {
       case 'JSON':
         return JSON.stringify(data, null, 2);
-      case 'TOML':
-        return require('tomlify-j0.4').toToml(data, null, 0);
       case 'YAML':
       case 'YML':
         return require('js-yaml').safeDump(data);

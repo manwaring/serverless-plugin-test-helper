@@ -3,7 +3,7 @@
   <img height="150" src="https://user-images.githubusercontent.com/2955468/50581158-0b705200-0e25-11e9-9fd5-0fe422e00f2e.png">
 </p>
 
-[![version][version]][version-url] [![downloads][downloads]][downloads-url] [![coverage][coverage]][coverage-url] [![license][license]][license-url]
+[![version][version]][version-url] [![downloads][downloads]][downloads-url] [![coverage][coverage]][coverage-url] [![size][size]][size-url] [![license][license]][license-url]
 
 [![Build][build]][build-url] [![dependabot][dependabot]][dependabot-url] [![dependencies][dependency]][dependency-url] [![dev dependencies][dev-dependency]][dev-dependency-url]
 
@@ -74,6 +74,7 @@ TODO sample hello world project in the repo?
 [version]: https://badgen.net/npm/v/serverless-plugin-test-helper?icon=npm&label=npm@latest
 [downloads]: https://badgen.net/npm/dt/serverless-plugin-test-helper?icon=npm
 [coverage]: https://badgen.net/codecov/c/github/manwaring/serverless-plugin-test-helper/?icon=codecov
+[size]: https://badgen.net/packagephobia/install/serverless-plugin-test-helper
 [license]: https://badgen.net/npm/license/serverless-plugin-test-helper/
 [language]: https://badgen.net/badge/typescript/typescript/?icon&label
 [style]: https://badgen.net/badge/code%20style/prettier?color=purple&icon=terminal&label
@@ -87,6 +88,7 @@ TODO sample hello world project in the repo?
 [version-url]: https://npmjs.com/package/serverless-plugin-test-helper
 [downloads-url]: https://www.npmjs.com/package/serverless-plugin-test-helper
 [coverage-url]: https://codecov.io/gh/manwaring/serverless-plugin-test-helper
+[size-url]: https://packagephobia.now.sh/result?p=serverless-plugin-test-helper
 [license-url]: https://www.npmjs.com/package/serverless-plugin-test-helper
 [build-url]: https://circleci.com/gh/manwaring/serverless-plugin-test-helper
 [dependabot-url]: https://badgen.net/dependabot/manwaring/serverless-plugin-test-helper
