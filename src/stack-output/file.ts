@@ -1,37 +1,28 @@
 import { writeFileSync, mkdirSync } from 'fs';
 
-const TESTING_OUTPUTS_DIRECTORY: string = '.serverless/stack-output';
-export const TESTING_OUTPUTS_PATH: string = '.serverless/stack-output/outputs.yml';
-
 export class StackOutputFile {
-  path: string;
-  directory: string;
-  extension: string;
+  private path: string;
+  private directory: string;
+  private extension: string;
+  private data: any;
 
-  constructor(path: string) {
+  constructor(path: string, data: object) {
     this.path = path;
-    this.directory = path.match(/.*\//) ? path.match(/.*\//)[0] : '';
-    this.extension = path.split('.').pop() || '';
+    this.directory = path && path.match(/.*\//) ? path.match(/.*\//)[0] : '';
+    this.extension = (path && path.split('.').pop()) || '';
+    this.data = this.format(data);
   }
 
-  public save(data: object) {
-    const content = this.format(data);
+  public save() {
     try {
       mkdirSync(this.directory, { recursive: true });
-      writeFileSync(this.path, content);
+      writeFileSync(this.path, this.data);
     } catch (err) {
       throw new Error(`Cannot write to file ${this.path}`);
     }
-    try {
-      mkdirSync(TESTING_OUTPUTS_DIRECTORY, { recursive: true });
-      writeFileSync(TESTING_OUTPUTS_PATH, content);
-    } catch (err) {
-      throw new Error(`Cannot write to file ${TESTING_OUTPUTS_PATH}`);
-    }
-    return Promise.resolve();
   }
 
-  public format(data: object) {
+  private format(data: object) {
     switch (this.extension.toUpperCase()) {
       case 'JSON':
         return JSON.stringify(data, null, 2);

@@ -3,17 +3,16 @@ declare interface StackOutputPair {
   OutputValue: string;
 }
 
+declare interface TestHelperConfig {
+  path?: string;
+}
+
 declare interface StackDescription {
   Outputs: StackOutputPair[];
 }
 
 declare interface StackDescriptionList {
   Stacks: StackDescription[];
-}
-
-declare interface OutputConfig {
-  handler: string;
-  file: string;
 }
 
 declare namespace Serverless {
@@ -47,7 +46,7 @@ declare interface Serverless {
   getVersion(): string;
 
   cli: {
-    log(message: string): null;
+    log(message: string): void;
   };
 
   config: {
@@ -61,7 +60,7 @@ declare interface Serverless {
     getAllFunctions(): string[];
 
     custom: {
-      output: OutputConfig;
+      testHelper?: TestHelperConfig;
     };
 
     provider: {

@@ -1,70 +1,47 @@
 import { ok, deepStrictEqual } from 'assert';
-import { format } from 'util';
 import { StackOutputFile } from './file';
+
+export const TESTING_OUTPUTS_PATH: string = '.serverless/stack-output/outputs.yml';
 
 export class StackOutputPlugin {
   public hooks: {};
-  private output: OutputConfig;
-  private file: string;
-  private handler: string;
-  private stackName: string;
+  private config: TestHelperConfig;
 
   constructor(private serverless: Serverless, private options: Serverless.Options) {
-    this.hooks = { 'after:deploy:deploy': this.process.bind(this) };
-    this.output = this.serverless.service.custom.output;
-    this.file = this.getConfig('file');
-    this.handler = this.getConfig('handler');
-    this.stackName = format(
-      '%s-%s',
-      this.serverless.service.getServiceName(),
-      this.serverless.getProvider('aws').getStage()
-    );
+    this.hooks = { 'after:deploy:deploy': this.getAndSaveStackOutput.bind(this) };
+    this.config = this.serverless.service.custom.testHelper;
   }
 
-  public hasConfig(key: string) {
-    return !!this.output && !!this.output[key];
+  public async getAndSaveStackOutput() {
+    try {
+      this.validate();
+      const output = await this.getStackOutput();
+      const formattedOutput = this.formatStackOutput(output);
+      this.saveStackOutput(formattedOutput);
+    } catch (err) {
+      this.serverless.cli.log(`Cannot process stack output: ${err.message}`);
+    }
   }
 
-  public hasHandler() {
-    return this.hasConfig('handler');
+  private validate() {
+    ok(this.serverless, 'Invalid serverless configuration');
+    ok(this.serverless.service, 'Invalid serverless configuration');
+    ok(this.serverless.service.provider, 'Invalid serverless configuration');
+    ok(this.serverless.service.provider.name, 'Invalid serverless configuration');
+    deepStrictEqual(this.serverless.service.provider.name, 'aws', 'Only supported for AWS provider');
+    ok(this.options && !this.options.noDeploy, 'Skipping deployment with --noDeploy flag');
   }
 
-  public hasFile() {
-    return this.hasConfig('file');
+  private getStackOutput(): Promise<StackDescriptionList> {
+    const aws = this.serverless.getProvider('aws');
+    const stage = aws.getStage();
+    const region = aws.getRegion();
+    // TODO is there a better way to get service name in case explicitly specified?
+    const StackName = `${this.serverless.service.getServiceName()}-${stage}`;
+    return aws.request('CloudFormation', 'describeStacks', { StackName }, stage, region);
   }
 
-  public getConfig(key: string) {
-    return format('%s/%s', this.serverless.config.servicePath, this.output[key]);
-  }
-
-  public callHandler(data: object) {
-    const splits = this.handler.split('.');
-    const func = splits.pop() || '';
-    const file = splits.join('.');
-
-    const res = require(file)[func](data, this.serverless, this.options);
-
-    return Promise.resolve(res);
-  }
-
-  public saveFile(data: object) {
-    const f = new StackOutputFile(this.file);
-    return f.save(data);
-  }
-
-  public fetch(): Promise<StackDescriptionList> {
-    return this.serverless
-      .getProvider('aws')
-      .request(
-        'CloudFormation',
-        'describeStacks',
-        { StackName: this.stackName },
-        this.serverless.getProvider('aws').getStage(),
-        this.serverless.getProvider('aws').getRegion()
-      );
-  }
-
-  public beautify(data: { Stacks: Array<{ Outputs: StackOutputPair[] }> }) {
+  private formatStackOutput(data: { Stacks: Array<{ Outputs: StackOutputPair[] }> }) {
     const stack = data.Stacks.pop() || { Outputs: [] };
     const output = stack.Outputs || [];
 
@@ -74,41 +51,16 @@ export class StackOutputPlugin {
     );
   }
 
-  public handle(data: object) {
-    return Promise.all([this.handleHandler(data), this.handleFile(data)]);
+  private saveStackOutput(data: object) {
+    if (this.config && this.config.path) {
+      this.saveStackOutputToPath(this.config.path, data);
+    }
+    this.saveStackOutputToPath(TESTING_OUTPUTS_PATH, data);
   }
 
-  public handleHandler(data: object) {
-    return this.hasHandler()
-      ? this.callHandler(data).then(() =>
-          this.serverless.cli.log(format('Stack Output processed with handler: %s', this.output.handler))
-        )
-      : Promise.resolve();
-  }
-
-  public handleFile(data: object) {
-    return this.hasFile()
-      ? this.saveFile(data).then(() =>
-          this.serverless.cli.log(format('Stack Output saved to file: %s', this.output.file))
-        )
-      : Promise.resolve();
-  }
-
-  public validate() {
-    ok(this.serverless, 'Invalid serverless configuration');
-    ok(this.serverless.service, 'Invalid serverless configuration');
-    ok(this.serverless.service.provider, 'Invalid serverless configuration');
-    ok(this.serverless.service.provider.name, 'Invalid serverless configuration');
-    deepStrictEqual(this.serverless.service.provider.name, 'aws', 'Only supported for AWS provider');
-    ok(this.options && !this.options.noDeploy, 'Skipping deployment with --noDeploy flag');
-  }
-
-  public process() {
-    return Promise.resolve()
-      .then(() => this.validate())
-      .then(() => this.fetch())
-      .then(res => this.beautify(res))
-      .then(res => this.handle(res))
-      .catch(err => this.serverless.cli.log(format('Cannot process Stack Output: %s!', err.message)));
+  private saveStackOutputToPath(path: string, data: object) {
+    const file = new StackOutputFile(path, data);
+    file.save();
+    this.serverless.cli.log(`Stack Output saved to file: ${this.config.path}`);
   }
 }

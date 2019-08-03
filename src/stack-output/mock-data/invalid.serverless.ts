@@ -1,6 +1,3 @@
-export const handler = 'standard-handler.js';
-export const file = '.stack-outputs.yml';
-
 const provider: Serverless.Provider.Aws = {
   getProviderName: () => '',
   getRegion: () => '',
@@ -14,7 +11,7 @@ export const options: Serverless.Options = {
   region: ''
 };
 
-export const serverless: Serverless = {
+export const invalidServerless = {
   init: () => null,
   run: () => null,
   setProvider: (name: string, provider: Serverless.Provider.Aws) => null,
@@ -25,10 +22,6 @@ export const serverless: Serverless = {
   region: 'us-east-1',
   service: {
     getServiceName: () => '',
-    getAllFunctions: () => [''],
-    custom: {
-      output: { file, handler }
-    },
-    provider: { name: 'aws' }
+    getAllFunctions: () => ['']
   }
 };

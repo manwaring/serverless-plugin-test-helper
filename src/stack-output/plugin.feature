@@ -1,5 +1,12 @@
 Feature: Stack output plugin configuration
 
-  Scenario: Basic plugin instantiation
-    Given valid plugin configuration
-    Then the fields are set correctly
+  Scenario: Plugin with no path specified
+    Given a plugin with no path specified
+    When the plugin is invoked
+    Then the testing stack output file is saved
+
+  Scenario: Plugin with custom path specified
+    Given a plugin with custom path specified
+    When the plugin is invoked
+    Then the testing stack output file is saved
+    And the custom stack output file is saved
