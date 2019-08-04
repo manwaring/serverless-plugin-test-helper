@@ -4,7 +4,7 @@
     "uncommittedChanges": true,
     "untrackedFiles": true,
     "sensitiveData": true,
-    "branch": "HEAD",
+    "branch": "/(\(HEAD detached at v)/",
     "gitTag": true
   },
   "confirm": false,
