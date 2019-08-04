@@ -10,9 +10,7 @@
     "test": "nyc node_modules/cucumber/bin/cucumber-js -p default",
     "pretest": "rimraf .test-output .serverless dist",
     "posttest": "rimraf .test-output .serverless && nyc report --reporter=json --reporter=lcov",
-    "codecov": "codecov -f coverage/*.json",
-    "preversion": "npm test",
-    "postversion": "git push && git push --tags"
+    "codecov": "codecov -f coverage/*.json"
   },
   "dependencies": {
     "js-yaml": "^3.13.1"
