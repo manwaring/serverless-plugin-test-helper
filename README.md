@@ -85,7 +85,7 @@ See the [AWS CloudFormation documentation on outputs](https://docs.aws.amazon.co
 
 Due to tight coupling with managed services and the difficulty in mocking those same services locally, end-to-end testing is incredibly important for deploying and running serverless applications with confidence. I believe that a good serverless deployment pipeline setup should include the following steps, in order:
 
-## For checkins/merges to master branch\*:
+## For checkins/merges to master branch\*
 
 1. Install project and dependencies
 1. Run unit tests
@@ -97,7 +97,7 @@ Due to tight coupling with managed services and the difficulty in mocking those 
 
 † Repeat steps 3 and 4 for however many static, non-production environments you have (development, staging, demo, etc.)
 
-## For checkins/merges to a feature branch\*:
+## For checkins/merges to a feature branch\*
 
 1. Install project and dependencies
 1. Run unit tests
