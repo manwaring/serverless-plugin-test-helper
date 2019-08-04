@@ -19,6 +19,8 @@ anchors:
     restore_cache:
       key: dependency-cache-{{ checksum "package.json" }}
 
+  semVerRegExp: &semanticVersioning /^(\d|[1-9]\d*)\.(\d|[1-9]\d*)\.(\d|[1-9]\d*)(-(0|[1-9A-Za-z-][0-9A-Za-z-]*|[0-9]*[A-Za-z-][0-9A-Za-z-]*)(\.(0|[1-9A-Za-z-][0-9A-Za-z-]*|[0-9]*[A-Za-z-][0-9A-Za-z-]*))*)?(\+[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?$/
+
 ## Circle CI configuration, see https://circleci.com/docs/2.0/configuration-reference/
 version: 2
 jobs:
@@ -63,7 +65,7 @@ jobs:
 
 workflows:
   version: 2
-  build_and_test:
+  test-and-publish:
     jobs:
       - install
       - test:
@@ -77,4 +79,4 @@ workflows:
             branches:
               only: master
             tags:
-              only: /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(\.(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*)?(\+[0-9a-zA-Z-]+(\.[0-9a-zA-Z-]+)*)?/
+              only: *semanticVersioning
