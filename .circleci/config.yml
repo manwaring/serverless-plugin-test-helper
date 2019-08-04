@@ -65,33 +65,16 @@ jobs:
 workflows:
   version: 2
 
-  test-only:
-    jobs:
-      - install:
-          filters:
-            tags:
-              ignore: /v.*/
-      - test:
-          requires:
-            - install
-          filters:
-            tags:
-              ignore: /v.*/
-
   test-and-publish:
     jobs:
       - install:
           filters:
-            branches:
-              ignore: /.*/
             tags:
-              only: /v.*/
+              only: /.*/
       - test:
           requires:
             - install
           filters:
-            branches:
-              ignore: /.*/
             tags:
               only: /v.*/
       - publish:
