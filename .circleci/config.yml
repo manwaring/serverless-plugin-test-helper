@@ -64,15 +64,19 @@ jobs:
 
 workflows:
   version: 2
+
   test-only:
     jobs:
-      - install
+      - install:
+          filters:
+            tags:
+              ignore: /v.*/
       - test:
           requires:
             - install
           filters:
             tags:
-              ignore: *semanticVersioning
+              ignore: /v.*/
 
   test-and-publish:
     jobs:
@@ -81,7 +85,7 @@ workflows:
             branches:
               ignore: /.*/
             tags:
-              only: *semanticVersioning
+              only: /v.*/
       - test:
           requires:
             - install
@@ -89,7 +93,7 @@ workflows:
             branches:
               ignore: /.*/
             tags:
-              only: *semanticVersioning
+              only: /v.*/
       - publish:
           context: manwaring-npm
           requires:
@@ -98,4 +102,4 @@ workflows:
             branches:
               ignore: /.*/
             tags:
-              only: *semanticVersioning
+              only: /v.*/
