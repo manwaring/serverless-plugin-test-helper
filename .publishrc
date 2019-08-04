@@ -1,10 +1,10 @@
 {
   "validations": {
-    "vulnerableDependencies": false,
+    "vulnerableDependencies": true,
     "uncommittedChanges": true,
     "untrackedFiles": true,
     "sensitiveData": true,
-    "branch": "master",
+    "branch": "HEAD",
     "gitTag": true
   },
   "confirm": false,
