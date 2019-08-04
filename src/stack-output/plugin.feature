@@ -10,3 +10,7 @@ Feature: Stack output plugin configuration
     When the plugin is invoked
     Then the testing stack output file is saved
     And the custom stack output file is saved
+
+  Scenario: Plugin with invalid configuration
+    Given a plugin with invalid configurations
+    Then an error occurs

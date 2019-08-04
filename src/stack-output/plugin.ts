@@ -1,7 +1,7 @@
 import { ok, deepStrictEqual } from 'assert';
 import { StackOutputFile } from './file';
 
-export const TESTING_OUTPUTS_PATH: string = '.serverless/stack-output/outputs.yml';
+export const DEFAULT_OUTPUTS_PATH: string = '.serverless/stack-output/outputs.yml';
 
 export class StackOutputPlugin {
   public hooks: {};
@@ -36,8 +36,7 @@ export class StackOutputPlugin {
     const aws = this.serverless.getProvider('aws');
     const stage = aws.getStage();
     const region = aws.getRegion();
-    // TODO is there a better way to get service name in case explicitly specified?
-    const StackName = `${this.serverless.service.getServiceName()}-${stage}`;
+    const StackName = aws.naming.getStackName();
     return aws.request('CloudFormation', 'describeStacks', { StackName }, stage, region);
   }
 
@@ -55,12 +54,12 @@ export class StackOutputPlugin {
     if (this.config && this.config.path) {
       this.saveStackOutputToPath(this.config.path, data);
     }
-    this.saveStackOutputToPath(TESTING_OUTPUTS_PATH, data);
+    this.saveStackOutputToPath(DEFAULT_OUTPUTS_PATH, data);
   }
 
   private saveStackOutputToPath(path: string, data: object) {
     const file = new StackOutputFile(path, data);
     file.save();
-    this.serverless.cli.log(`Stack Output saved to file: ${this.config.path}`);
+    this.serverless.cli.log(`Stack Output saved to file: ${path}`);
   }
 }

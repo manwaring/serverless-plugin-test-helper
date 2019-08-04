@@ -1,8 +1,13 @@
+import cloneDeep = require('lodash/cloneDeep');
+
 const provider: Serverless.Provider.Aws = {
   getProviderName: () => '',
   getRegion: () => '',
   getServerlessDeploymentBucketName: () => '',
   getStage: () => '',
+  naming: {
+    getStackName: () => ''
+  },
   request
 };
 
@@ -53,3 +58,7 @@ export const defaultServerless: Serverless = {
     provider: { name: 'aws' }
   }
 };
+
+export function getCopyOfDefaultConfiguration() {
+  return cloneDeep(defaultServerless);
+}

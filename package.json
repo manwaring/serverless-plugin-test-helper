@@ -5,10 +5,10 @@
   "scripts": {
     "publish-please": "publish-please",
     "prepublishOnly": "publish-please guard && npm run build",
-    "build": "rimraf dist/ && tsc -p ./tsconfig.build.json",
+    "build": "rimraf dist && tsc -p ./tsconfig.build.json",
     "postbuild": "ncp src/index.d.ts dist/index.d.ts",
     "test": "nyc node_modules/cucumber/bin/cucumber-js -p default",
-    "pretest": "rimraf .test-output .serverless",
+    "pretest": "rimraf .test-output .serverless dist",
     "posttest": "rimraf .test-output .serverless && nyc report --reporter=json --reporter=lcov",
     "codecov": "codecov -f coverage/*.json"
   },
@@ -16,12 +16,14 @@
     "js-yaml": "^3.13.1"
   },
   "devDependencies": {
+    "@types/lodash.clonedeep": "^4.5.6",
     "@types/node": "^12.6.9",
     "chai": "^4.2.0",
     "codecov": "^3.5.0",
     "cucumber": "^5.1.0",
     "cucumber-pretty": "^1.5.2",
     "cucumber-tsflow": "^3.2.0",
+    "lodash.clonedeep": "^4.5.0",
     "ncp": "^2.0.0",
     "nyc": "^14.1.1",
     "publish-please": "^5.5.1",

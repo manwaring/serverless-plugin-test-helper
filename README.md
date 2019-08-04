@@ -9,52 +9,89 @@
 
 # Serverless plugin test helper
 
-1. [Library overview](#library-overview)
+1. [Overview](#overview)
 1. [Installation and setup](#installation-and-setup)
+   1. [Plugin setup and optional configuration](#plugin-setup-and-optional-configuration)
+   1. [Library setup](#library-setup)
 1. [An opinionated approach to serverless testing](#an-opinionated-approach-to-serverless-testing)
 
-## Library overview
+# Overview
 
-This library helps out with end-to-end testing of applications and services deployed using the [Serverless Framework](https://serverless.com/framework/) by locally persisting and exposing dynamic AWS resource information such as endpoint URLs.
+Running tests on deployed services (vs locally mocked ones) is an important final step in a robust serverless deployment pipeline because it isn't possible to recreate all aspects of a final solution locally - concerns such as fine-grained resource access through IAM and scalability/performance characteristics of the system can only be assessed while the application is running on AWS. Running these tests on stage/branch-specific versions of the application (see [serverless testing best practices below](#serverless-testing-best-practices)) is difficult to do given the dynamic nature of AWS resource naming. This package makes it easier to write post-deployment tests for applications and services written and deployed using the [Serverless Framework](https://serverless.com/framework/) by locally persisting dynamic AWS resource information such as endpoint URLs and exposing them to your tests via easily-imported helper functions.
 
-The library has two parts:
+The package has two parts:
 
-1. A Serverless Framework plugin which extends `sls deploy` to save a local copy of the generated CloudFormation Stack output (which includes service information such as endpoint URLs)
-1. A standard Nodejs library which can be imported to access the output values in tests
+1. A [Serverless Framework plugin](https://github.com/serverless/plugins) which extends `sls deploy` to save a local copy of the generated CloudFormation Stack output
+1. A standard Node.js library which can be imported to access stack output values in tests (or any other code you want to run post-deployment)
 
-## Installation and setup
+# Installation and setup
 
-Install and save to `package.json` as a dev dependency:
+Install and save the package to `package.json` as a dev dependency:
 
-`npm i -D serverless-plugin-test-helper`
+`npm i --save-dev serverless-plugin-test-helper`
 
-Register the plugin in `serverless.yml` plugins section to save the stack output:
+## Plugin setup and optional configuration
+
+Add the package to the `serverless.yml` plugins section:
 
 ```yml
 plugins:
   - serverless-plugin-test-helper
 ```
 
-Import the helper functions into your test files for getting values from the stack output:
+By default the plugin will generate a file containing stack outputs at `.serverless/stack-output/outputs.yml`, which is where the library pulls values from. You can optionally specify an additional path for storing outputs by using the `serverless.yml` custom section:
 
-```ts
-import { getDeployedUrl } from 'serverless-plugin-test-helper';
-const URL = getDeployedUrl();
+```yml
+custom:
+  testHelper: # This key is used by the plugin to pull in the optional path value
+    path: path/for/outputs[ .yml | .yaml | .json ]
 ```
 
-## An opinionated approach to serverless testing
+## Library setup
 
-Due to tight coupling with managed services and the difficulty in mocking those same services locally, end-to-end testing is incredibly important for deploying serverless applications with confidence (citations needed). Given the dynamic nature of cloud service names and arns it can be difficult to setup a fully-automated test suite, increasing the barrier to entry for clean end-to-end tests. A good deployment pipeline setup should include the following steps, in order:
-TODO: trunk based development, account separation, Odin
+Import the helper functions into your test files to retrieve values from deployed stack output:
+
+```ts
+import { getDeployedUrl, getDeploymentBucket, getOutput } from 'serverless-plugin-test-helper';
+
+const URL = getDeployedUrl();
+const BUCKET_NAME = getDeploymentBucket();
+const DOCUMENT_STORAGE_BUCKET_NAME = getOutput('DocumentStorageBucket');
+```
+
+To see what output values are available for reference you can check the generated `.serverless/stack-output/outputs.yml` file after a deployment. To make additional values available you can specify up to 60 CloudFormation Stack Outputs in `serverless.yml` using the resources > Outputs section:
+
+```yml
+resources:
+  Outputs:
+    # Generic example
+    Output1: # This is the key that will be used in the generated outputs file
+      Description: This is an optional description that will show up in the CloudFormation dashboard
+      Value: { Ref: CloudFormationParameterOrResourceYouWishToExport }
+
+    # Example referencing a custom S3 bucket used for file storage (defined under Resources section below)
+    DocumentStorageBucket:
+      Description: Name of the S3 bucket used for document storage by this stack
+      Value: { Ref: DocumentStorageBucket }
+
+  Resources:
+    DocumentStorageBucket:
+      Type: AWS::S3::Bucket
+```
+
+See the [AWS CloudFormation documentation on outputs](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/outputs-section-structure.html) for more information
+
+# Serverless testing best practices
+
+Due to tight coupling with managed services and the difficulty in mocking those same services locally, end-to-end testing is incredibly important for deploying and running serverless applications with confidence. I believe that a good serverless deployment pipeline setup should include the following steps, in order\*:
 
 For checkins/merges to master branch:
 
 1. Install project and dependencies
 1. Run unit tests
-1. Deploy to a static environment (using `--stage <environment>` option in Serverless Framework)
-1. Run e2e tests on the environment
-   ... repeat for all static, non-prod environments
-   ... include a manual step if want to gate production deploys
+1. Deploy to a static, non-production environment (using `--stage <environment>` option in Serverless Framework)†
+1. Run e2e tests in the static, non-production environment†
+1. Optional: include a manual step if want to gate production deploys
 1. Deploy to production environment (using `--stage production`)
 1. Run e2e tests in production
 
@@ -62,26 +99,26 @@ For checkins/merges to a feature branch:
 
 1. Install project and dependencies
 1. Run unit tests
-1. Deploy to a dynamic environment (using `--stage <branch or username>` option in Serverless Framework)
-1. Run e2e tests on dynamic environment
+1. Deploy to a dynamic, non-production environment (using `--stage <branch or username>` option in Serverless Framework)
+1. Run e2e tests in the dynamic, non-production environment
 
-This library supports this kind of pipeline testing approach by saving AWS service configurations from CloudFormation Stack output to a local file after the serverless deployment (`sls deploy`) so that the values can be referenced in later steps for calling those deployed resources.
-TODO link to circleci config as an example
-TODO sample hello world project in the repo?
+\* Note that this kind of pipeline works best using [trunk based development](https://trunkbaseddevelopment.com/)
+
+† Repeat steps 3 and 4 for however many static, non-production environments you have (development, staging, demo, etc.)
 
 <!-- Badge icons -->
 
-[version]: https://badgen.net/npm/v/serverless-plugin-test-helper?icon=npm&label=npm@latest
-[downloads]: https://badgen.net/npm/dt/serverless-plugin-test-helper?icon=npm
-[coverage]: https://badgen.net/codecov/c/github/manwaring/serverless-plugin-test-helper/?icon=codecov
-[size]: https://badgen.net/packagephobia/install/serverless-plugin-test-helper
-[license]: https://badgen.net/npm/license/serverless-plugin-test-helper/
-[language]: https://badgen.net/badge/typescript/typescript/?icon&label
-[style]: https://badgen.net/badge/code%20style/prettier?color=purple&icon=terminal&label
-[build]: https://badgen.net/circleci/github/manwaring/serverless-plugin-test-helper/master?icon=circleci
-[dependabot]: https://badgen.net/dependabot/manwaring/serverless-plugin-test-helper/?icon=dependabot&label=dependabot
-[dependency]: https://badgen.net/david/dep/manwaring/serverless-plugin-test-helper
-[dev-dependency]: https://badgen.net/david/dev/manwaring/serverless-plugin-test-helper/?label=dev+dependencies
+[version]: https://flat.badgen.net/npm/v/serverless-plugin-test-helper?icon=npm&label=npm@latest
+[downloads]: https://flat.badgen.net/npm/dt/serverless-plugin-test-helper?icon=npm
+[coverage]: https://flat.badgen.net/codecov/c/github/manwaring/serverless-plugin-test-helper/?icon=codecov
+[size]: https://flat.badgen.net/packagephobia/install/serverless-plugin-test-helper
+[license]: https://flat.badgen.net/npm/license/serverless-plugin-test-helper/
+[language]: https://flat.badgen.net/badge/typescript/typescript/?icon&label
+[style]: https://flat.badgen.net/badge/code%20style/prettier?color=purple&icon=terminal&label
+[build]: https://flat.badgen.net/circleci/github/manwaring/serverless-plugin-test-helper/master?icon=circleci
+[dependabot]: https://flat.badgen.net/dependabot/manwaring/serverless-plugin-test-helper/?icon=dependabot&label=dependabot
+[dependency]: https://flat.badgen.net/david/dep/manwaring/serverless-plugin-test-helper
+[dev-dependency]: https://flat.badgen.net/david/dev/manwaring/serverless-plugin-test-helper/?label=dev+dependencies
 
 <!-- Badge URLs -->
 
@@ -91,6 +128,6 @@ TODO sample hello world project in the repo?
 [size-url]: https://packagephobia.now.sh/result?p=serverless-plugin-test-helper
 [license-url]: https://www.npmjs.com/package/serverless-plugin-test-helper
 [build-url]: https://circleci.com/gh/manwaring/serverless-plugin-test-helper
-[dependabot-url]: https://badgen.net/dependabot/manwaring/serverless-plugin-test-helper
+[dependabot-url]: https://flat.badgen.net/dependabot/manwaring/serverless-plugin-test-helper
 [dependency-url]: https://david-dm.org/manwaring/serverless-plugin-test-helper
 [dev-dependency-url]: https://david-dm.org/manwaring/serverless-plugin-test-helper?type=dev
