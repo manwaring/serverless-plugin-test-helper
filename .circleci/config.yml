@@ -64,12 +64,32 @@ jobs:
 
 workflows:
   version: 2
-  test-and-publish:
+  test-only:
     jobs:
       - install
       - test:
           requires:
             - install
+          filters:
+            tags:
+              ignore: *semanticVersioning
+
+  test-and-publish:
+    jobs:
+      - install:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: *semanticVersioning
+      - test:
+          requires:
+            - install
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: *semanticVersioning
       - publish:
           context: manwaring-npm
           requires:
