@@ -76,7 +76,7 @@ workflows:
             - install
           filters:
             tags:
-              only: /v.*/
+              only: /.*/
       - publish:
           context: manwaring-npm
           requires:
