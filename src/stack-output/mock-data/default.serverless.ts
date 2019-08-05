@@ -54,7 +54,6 @@ export const defaultServerless: Serverless = {
   service: {
     getServiceName: () => '',
     getAllFunctions: () => [''],
-    custom: {},
     provider: { name: 'aws' }
   }
 };

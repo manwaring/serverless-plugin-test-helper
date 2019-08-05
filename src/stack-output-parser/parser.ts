@@ -14,7 +14,7 @@ export function getDeploymentBucket(): string {
 
 export function getOutput(key: string): string {
   key = key.replace(/[_-]/g, '');
-  console.log(`Retreiving the ${key} property from stack output in the ${DEFAULT_OUTPUTS_PATH} file`);
+  console.log(`Retrieving the ${key} property from stack output in the ${DEFAULT_OUTPUTS_PATH} file`);
   const localFile = safeLoad(readFileSync(DEFAULT_OUTPUTS_PATH, 'utf-8'));
   let matching = Object.keys(localFile).find(k => k.toUpperCase() === key.toUpperCase());
   return matching ? localFile[matching] : '';

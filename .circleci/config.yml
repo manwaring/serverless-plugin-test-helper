@@ -20,6 +20,17 @@ anchors:
   # regex from https://circleci.com/blog/publishing-to-github-releases-via-circleci/
   semVerRegExp: &semanticVersioning /(?<=^[Vv]|^)(?:(?<major>(?:0|[1-9](?:(?:0|[1-9])+)*))[.](?<minor>(?:0|[1-9](?:(?:0|[1-9])+)*))[.](?<patch>(?:0|[1-9](?:(?:0|[1-9])+)*))(?:-(?<prerelease>(?:(?:(?:[A-Za-z]|-)(?:(?:(?:0|[1-9])|(?:[A-Za-z]|-))+)?|(?:(?:(?:0|[1-9])|(?:[A-Za-z]|-))+)(?:[A-Za-z]|-)(?:(?:(?:0|[1-9])|(?:[A-Za-z]|-))+)?)|(?:0|[1-9](?:(?:0|[1-9])+)*))(?:[.](?:(?:(?:[A-Za-z]|-)(?:(?:(?:0|[1-9])|(?:[A-Za-z]|-))+)?|(?:(?:(?:0|[1-9])|(?:[A-Za-z]|-))+)(?:[A-Za-z]|-)(?:(?:(?:0|[1-9])|(?:[A-Za-z]|-))+)?)|(?:0|[1-9](?:(?:0|[1-9])+)*)))*))?(?:[+](?<build>(?:(?:(?:[A-Za-z]|-)(?:(?:(?:0|[1-9])|(?:[A-Za-z]|-))+)?|(?:(?:(?:0|[1-9])|(?:[A-Za-z]|-))+)(?:[A-Za-z]|-)(?:(?:(?:0|[1-9])|(?:[A-Za-z]|-))+)?)|(?:(?:0|[1-9])+))(?:[.](?:(?:(?:[A-Za-z]|-)(?:(?:(?:0|[1-9])|(?:[A-Za-z]|-))+)?|(?:(?:(?:0|[1-9])|(?:[A-Za-z]|-))+)(?:[A-Za-z]|-)(?:(?:(?:0|[1-9])|(?:[A-Za-z]|-))+)?)|(?:(?:0|[1-9])+)))*))?)$/
 
+  configure-aws-access: &configure-aws-access
+    run:
+      name: Configure AWS access
+      command: |
+        mkdir -p ~/.aws
+        cat > ~/.aws/credentials << EOL
+        [default]
+        aws_access_key_id = $AWS_ACCESS_KEY
+        aws_secret_access_key = $AWS_SECRET_ACCESS_KEY
+        EOL
+
 ## Circle CI configuration, see https://circleci.com/docs/2.0/configuration-reference/
 version: 2
 jobs:
@@ -62,6 +73,26 @@ jobs:
           name: Publish on npm
           command: npm run publish-please
 
+  test-default-example:
+    <<: *container-config
+    steps:
+      - checkout
+      - *load-cache
+      - *configure-aws-access
+      - run:
+          name: Deploy and test default example app
+          command: npm run testexamples-default
+
+  test-custom-example:
+    <<: *container-config
+    steps:
+      - checkout
+      - *load-cache
+      - *configure-aws-access
+      - run:
+          name: Deploy and test custom app
+          command: npm run testexamples-custom
+
 workflows:
   version: 2
 
@@ -81,6 +112,24 @@ workflows:
           context: manwaring-npm
           requires:
             - test
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /v.*/
+      - test-default-example:
+          context: manwaring-aws
+          requires:
+            - publish
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /v.*/
+      - test-custom-example:
+          context: manwaring-aws
+          requires:
+            - publish
           filters:
             branches:
               ignore: /.*/

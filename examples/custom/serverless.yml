@@ -1,0 +1,24 @@
+service:
+  name: test-helper-custom
+
+plugins:
+  - serverless-webpack
+  - serverless-plugin-test-helper
+
+provider:
+  name: aws
+  stage: example
+  runtime: nodejs10.x
+
+custom:
+  blah: blah
+  testHelper:
+    path: stack-outputs.yml
+
+functions:
+  hello:
+    handler: handler.hello
+    events:
+      - http:
+          method: get
+          path: hello

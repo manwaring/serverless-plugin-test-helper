@@ -5,8 +5,9 @@ exclude:
   - '**/*cucumber*'
   - '**/*.d.ts'
   - '**/*index.ts'
-  - '**/*/mock-data/**'
-  - coverage/**
+  - '**/*/mock-data'
+  - coverage
+  - examples
 
 extension:
   - .ts

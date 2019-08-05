@@ -62,7 +62,7 @@ declare interface Serverless {
     getServiceName(): string;
     getAllFunctions(): string[];
 
-    custom: {
+    custom?: {
       testHelper?: TestHelperConfig;
     };
 

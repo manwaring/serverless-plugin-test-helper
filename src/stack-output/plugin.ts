@@ -9,7 +9,7 @@ export class StackOutputPlugin {
 
   constructor(private serverless: Serverless, private options: Serverless.Options) {
     this.hooks = { 'after:deploy:deploy': this.getAndSaveStackOutput.bind(this) };
-    this.config = this.serverless.service.custom.testHelper;
+    this.config = serverless.service.custom ? serverless.service.custom.testHelper : {};
   }
 
   public async getAndSaveStackOutput() {

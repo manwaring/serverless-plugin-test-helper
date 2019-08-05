@@ -13,6 +13,7 @@
 1. [Installation and setup](#installation-and-setup)
    1. [Plugin setup and optional configuration](#plugin-setup-and-optional-configuration)
    1. [Library setup](#library-setup)
+1. [Examples](#Examples)
 1. [An opinionated approach to serverless testing](#an-opinionated-approach-to-serverless-testing)
 
 # Overview
@@ -44,7 +45,7 @@ By default the plugin will generate a file containing stack outputs at `.serverl
 ```yml
 custom:
   testHelper: # This key is used by the plugin to pull in the optional path value
-    path: path/for/outputs[ .yml | .yaml | .json ]
+    path: optional/path/for/another/outputs[ .yml | .yaml | .json ]
 ```
 
 ## Library setup
@@ -80,6 +81,13 @@ resources:
 ```
 
 See the [AWS CloudFormation documentation on outputs](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/outputs-section-structure.html) for more information
+
+# Examples
+
+There are two working examples of how this package can be used in a simple 'hello world' serverless application in [examples](examples).
+
+1. [Using the default plugin configuration](examples/default)
+1. [Plugin with optional configurations](examples/custom)
 
 # Serverless testing best practices
 
