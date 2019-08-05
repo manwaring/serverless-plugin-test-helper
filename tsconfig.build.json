@@ -3,5 +3,5 @@
   "compilerOptions": {
     "outDir": "dist"
   },
-  "exclude": ["node_modules", "dist", "**/*/mock-data/**", "**/*.cucumber*"]
+  "exclude": ["node_modules", "dist", "**/*/mock-data/**", "**/*.cucumber*", "examples"]
 }
