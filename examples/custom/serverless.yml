@@ -13,7 +13,7 @@ provider:
 custom:
   blah: blah
   testHelper:
-    path: stack-outputs.yml
+    path: .stack-outputs.yml
 
 functions:
   hello:
