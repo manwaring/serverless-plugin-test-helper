@@ -1,5 +1,5 @@
 service:
-  name: test-helper-default
+  name: test-helper-custom-ts
 
 plugins:
   - serverless-webpack
@@ -9,6 +9,11 @@ provider:
   name: aws
   stage: example
   runtime: nodejs10.x
+
+custom:
+  blah: blah
+  testHelper:
+    path: .stack-outputs.yml
 
 functions:
   hello:

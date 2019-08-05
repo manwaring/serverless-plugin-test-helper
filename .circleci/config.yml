@@ -73,7 +73,7 @@ jobs:
           name: Publish on npm
           command: npm run publish-please
 
-  test-default-example:
+  test-default-ts-example:
     <<: *container-config
     steps:
       - checkout
@@ -81,9 +81,19 @@ jobs:
       - *configure-aws-access
       - run:
           name: Deploy and test default example app
-          command: npm run testexamples-default
+          command: npm run testexamples-default-ts
 
-  test-custom-example:
+  test-default-js-example:
+    <<: *container-config
+    steps:
+      - checkout
+      - *load-cache
+      - *configure-aws-access
+      - run:
+          name: Deploy and test default example app
+          command: npm run testexamples-default-js
+
+  test-custom-ts-example:
     <<: *container-config
     steps:
       - checkout
@@ -91,7 +101,7 @@ jobs:
       - *configure-aws-access
       - run:
           name: Deploy and test custom app
-          command: npm run testexamples-custom
+          command: npm run testexamples-custom-ts
 
 workflows:
   version: 2
@@ -124,7 +134,7 @@ workflows:
               ignore: /.*/
             tags:
               only: /v.*/
-      - test-default-example:
+      - test-default-ts-example:
           context: manwaring-aws
           requires:
             - publish
@@ -133,7 +143,16 @@ workflows:
               ignore: /.*/
             tags:
               only: /v.*/
-      - test-custom-example:
+      - test-custom-ts-example:
+          context: manwaring-aws
+          requires:
+            - publish
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /v.*/
+      - test-default-js-example:
           context: manwaring-aws
           requires:
             - publish

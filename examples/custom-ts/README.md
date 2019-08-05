@@ -1,4 +1,4 @@
-# Example project with custom configuration
+# Example TypeScript project with custom configuration
 
 1. [Overview of custom configuration options](#custom-configuration)
 1. [Steps to deploy and test the app](#deploying-and-testing-the-example-app)
@@ -47,6 +47,7 @@ Added files (top to bottom):
 Changed files (top to bottom):
 
 - [package.json](package.json): additional libraries have been added which are required for testing, and also the latest `*` version of the `serverless-plugin-test-helper` so that I can automatically test new versions of the package after publishing
+- [serverless.yml](serverless.yml): added the `serverless-plugin-test-helper` plugin to plugins section (along with the custom configuration detailed above), and a default stage under provider
 
 Added libraries (top to bottom of [package.json](package.json)):
 

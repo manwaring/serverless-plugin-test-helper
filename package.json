@@ -12,8 +12,9 @@
     "pretest": "rimraf .test-output .serverless dist",
     "posttest": "rimraf .test-output .serverless .test.* && nyc report --reporter=json --reporter=lcov",
     "codecov": "codecov -f coverage/*.json",
-    "testexamples-default": "cd examples/default && rm -rf node_modules package-lock.json && npm i && npm run deploy && npm test",
-    "testexamples-custom": "cd examples/custom && rm -rf node_modules package-lock.json && npm i && npm run deploy && npm test"
+    "testexamples-custom-ts": "cd examples/custom && rm -rf node_modules package-lock.json && npm i && npm run deploy && npm test",
+    "testexamples-default-ts": "cd examples/default && rm -rf node_modules package-lock.json && npm i && npm run deploy && npm test",
+    "testexamples-default-js": "cd examples/default-js && rm -rf node_modules package-lock.json && npm i && npm run deploy && npm test"
   },
   "dependencies": {
     "js-yaml": "^3.13.1"

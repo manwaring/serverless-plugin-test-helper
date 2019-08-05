@@ -84,10 +84,11 @@ See the [AWS CloudFormation documentation on outputs](https://docs.aws.amazon.co
 
 # Examples
 
-There are two working examples of how this package can be used in a simple 'hello world' serverless application in [examples](examples).
+There are three working examples of how this package can be used in a simple 'hello world' serverless application in [examples](examples).
 
-1. [Using the default plugin configuration](examples/default)
-1. [Plugin with optional configurations](examples/custom)
+1. [Plugin with optional configurations in a TypeScript project](examples/custom-ts)
+1. [Using the default plugin configuration in a TypeScript project](examples/default-ts)
+1. [Using the default plugin configuration in a JavaScript project](examples/default-ts)
 
 # Serverless testing best practices
 
