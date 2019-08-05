@@ -12,8 +12,8 @@
     "pretest": "rimraf .test-output .serverless dist",
     "posttest": "rimraf .test-output .serverless .test.* && nyc report --reporter=json --reporter=lcov",
     "codecov": "codecov -f coverage/*.json",
-    "testexamples-default": "cd examples/default && npm i && npm run deploy -- --aws-profile personal && npm test",
-    "testexamples-custom": "cd examples/custom && npm i && npm run deploy -- --aws-profile personal && npm test"
+    "testexamples-default": "cd examples/default && npm i && npm run deploy && npm test",
+    "testexamples-custom": "cd examples/custom && npm i && npm run deploy && npm test"
   },
   "dependencies": {
     "js-yaml": "^3.13.1"
