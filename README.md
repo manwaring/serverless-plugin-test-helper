@@ -52,8 +52,20 @@ custom:
 
 Import the helper functions into your test files to retrieve values from deployed stack output:
 
+Using TypeScript:
+
 ```ts
 import { getDeployedUrl, getDeploymentBucket, getOutput } from 'serverless-plugin-test-helper';
+
+const URL = getDeployedUrl();
+const BUCKET_NAME = getDeploymentBucket();
+const DOCUMENT_STORAGE_BUCKET_NAME = getOutput('DocumentStorageBucket');
+```
+
+Using JavaScript:
+
+```js
+const { getDeployedUrl, getDeploymentBucket, getOutput } = require('serverless-plugin-test-helper');
 
 const URL = getDeployedUrl();
 const BUCKET_NAME = getDeploymentBucket();
