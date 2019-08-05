@@ -10,6 +10,9 @@ Feature: Stack output file configuration
       | .test-output/file/test.yaml | '{"foo": "bar"}' |
       | .test-output/file/test.yml  | '{"foo": "bar"}' |
       | .test-output/file/test.json | '{"foo": "bar"}' |
+      | .test.yaml                  | '{"foo": "bar"}' |
+      | .test.yml                   | '{"foo": "bar"}' |
+      | .test.json                  | '{"foo": "bar"}' |
 
   Scenario Outline: Output file type is not supported
     Given unsupported path '<path>' and data <data>

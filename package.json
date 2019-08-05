@@ -1,18 +1,19 @@
 {
   "name": "serverless-plugin-test-helper",
   "description": "A utility library to help with testing deployed serverless applications",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "scripts": {
+    "publish-please-dry-run": "publish-please --dry-run",
     "publish-please": "publish-please",
     "prepublishOnly": "publish-please guard && npm run build",
     "build": "rimraf dist && tsc -p ./tsconfig.build.json",
     "postbuild": "ncp src/index.d.ts dist/index.d.ts",
     "test": "nyc node_modules/cucumber/bin/cucumber-js -p default",
     "pretest": "rimraf .test-output .serverless dist",
-    "posttest": "rimraf .test-output .serverless && nyc report --reporter=json --reporter=lcov",
+    "posttest": "rimraf .test-output .serverless .test.* && nyc report --reporter=json --reporter=lcov",
     "codecov": "codecov -f coverage/*.json",
-    "testexamples-default": "cd examples/default && npm i && npm run deploy && npm test",
-    "testexamples-custom": "cd examples/custom && npm i && npm run deploy && npm test"
+    "testexamples-default": "cd examples/default && npm i && npm run deploy -- --aws-profile personal && npm test",
+    "testexamples-custom": "cd examples/custom && npm i && npm run deploy -- --aws-profile personal && npm test"
   },
   "dependencies": {
     "js-yaml": "^3.13.1"

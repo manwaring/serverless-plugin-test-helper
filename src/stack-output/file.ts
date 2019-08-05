@@ -15,7 +15,9 @@ export class StackOutputFile {
 
   public save() {
     try {
-      mkdirSync(this.directory, { recursive: true });
+      if (this.directory) {
+        mkdirSync(this.directory, { recursive: true });
+      }
       writeFileSync(this.path, this.data);
     } catch (err) {
       throw new Error(`Cannot write to file ${this.path}: ${err}`);

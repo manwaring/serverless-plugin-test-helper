@@ -108,6 +108,13 @@ workflows:
           filters:
             tags:
               only: /.*/
+      # TODO add a dry-run step to non-tagged changes
+      # - publish-dry-run:
+      #     requires:
+      #       - test
+      #     filters:
+      #       tags:
+      #         only: /.*/
       - publish:
           context: manwaring-npm
           requires:

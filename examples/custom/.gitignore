@@ -7,3 +7,6 @@ jspm_packages
 
 # Webpack directories
 .webpack
+
+# prevent caching of serverless-plugin-test-helper version
+# package-lock.json

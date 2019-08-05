@@ -35,7 +35,7 @@ _Prerequisite:_ Follow the [Serverless Framework AWS quick start](https://server
 
 ## Project setup and orientation
 
-This project was generated with the aws-nodejs-typescript template using the `sls create -t aws-nodejs-typescript` command. Several files were then added/modified and multiple libraries were imported to get end-to-end testing up and running.
+This project was generated with the aws-nodejs-typescript template using the `sls create -t aws-nodejs-typescript` command. Several files were then added/modified and multiple libraries were imported to get end-to-end testing up and running. (Note that these changes are consistent between the example projects)
 
 Added files (top to bottom):
 
@@ -55,5 +55,6 @@ Added libraries (top to bottom of [package.json](package.json)):
 - [cucumber](https://github.com/cucumber/cucumber-js), [cucumber-tsflow](https://github.com/timjroberts/cucumber-js-tsflow): Cucumber is a testing tool that emphasizes human readability of the tests (via Gherkin feature files), and `cucumber-tsflow` extends this with typings and regex-based function decorators
 - [cucumber-pretty](https://github.com/kozhevnikov/cucumber-pretty): just a formatter for more verbose test output
 - [request](https://github.com/request/request), [request-promise-native](https://github.com/request/request-promise-native): an incredibily populare HTTP client, and a wrapper which uses native promises
+- [serverless](https://github.com/serverless/serverless): I prefer to keep a local copy of serverless to pin the version down more explicitly
 - [serverless-plugin-test-helper](https://github.com/manwaring/serverless-plugin-test-helper): this project, because that's the whole point!
 - [ts-node](https://github.com/TypeStrong/ts-node): allows for the execution of TypeScript tests on TypeScript files without compiling into JavaScript first
