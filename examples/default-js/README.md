@@ -22,7 +22,7 @@ This project was generated with the aws-nodejs template using the `sls create -t
 Added files (top to bottom):
 
 - [cucumber.js](cucumber.js): configuration file for using cucumber-js to drive tests (what can I say, I like BDD)
-- [handler.cucumber.js](handler.cucumber.ts): test steps for calling the 'hello world' endpoint and validating it's response (this file contains the `serverless-plugin-test-helper` library functions for exposing stack values such as the URL)
+- [handler.test.e2e.js](handler.test.e2e.js): test steps for calling the 'hello world' endpoint and validating it's response (this file contains the `serverless-plugin-test-helper` library functions for exposing stack values such as the URL)
 - [handler.feature](handler.feature): Gherkin file defining how the test steps are called
 - [package.json](package.json): added so that can include libraries for testing, and also the latest `*` version of the `serverless-plugin-test-helper` so that I can automatically test new versions of the package after publishing
 - [README.md](README.md): this file, hopefully making it easier for you to use this package!

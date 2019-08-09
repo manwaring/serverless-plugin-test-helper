@@ -22,7 +22,7 @@ This project was generated with the aws-nodejs-typescript template using the `sl
 Added files (top to bottom):
 
 - [cucumber.js](cucumber.js): configuration file for using cucumber-js to drive tests (what can I say, I like BDD)
-- [handler.cucumber.ts](handler.cucumber.ts): test steps for calling the 'hello world' endpoint and validating it's response (this file contains the `serverless-plugin-test-helper` library functions for exposing stack values such as the URL)
+- [handler.test.e2e.ts](handler.test.e2e.ts): test steps for calling the 'hello world' endpoint and validating it's response (this file contains the `serverless-plugin-test-helper` library functions for exposing stack values such as the URL)
 - [handler.feature](handler.feature): Gherkin file defining how the test steps are called
 - [README.md](README.md): this file, hopefully making it easier for you to use this package!
 

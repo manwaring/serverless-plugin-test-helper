@@ -11,9 +11,9 @@
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.17",
-    "@types/chai": "^4.1.7",
+    "@types/chai": "^4.2.0",
     "@types/cucumber": "^4.0.7",
-    "@types/node": "^12.6.9",
+    "@types/node": "^12.7.1",
     "@types/request-promise-native": "^1.0.16",
     "chai": "^4.2.0",
     "cucumber": "^5.1.0",

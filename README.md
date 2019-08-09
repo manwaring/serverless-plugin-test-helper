@@ -16,6 +16,8 @@
 1. [Examples](#Examples)
 1. [An opinionated approach to serverless testing](#an-opinionated-approach-to-serverless-testing)
 
+_Feedback appreciated! If you have an idea for how this plugin can be improved [please open an issue](https://github.com/manwaring/serverless-plugin-test-helper/issues/new)._
+
 # Overview
 
 Running tests on deployed services (vs locally mocked ones) is an important final step in a robust serverless deployment pipeline because it isn't possible to recreate all aspects of a final solution locally - concerns such as fine-grained resource access through IAM and scalability/performance characteristics of the system can only be assessed while the application is running on AWS. Running these tests on stage/branch-specific versions of the application (see [serverless testing best practices below](#serverless-testing-best-practices)) is difficult to do given the dynamic nature of AWS resource naming. This package makes it easier to write post-deployment tests for applications and services written and deployed using the [Serverless Framework](https://serverless.com/framework/) by locally persisting dynamic AWS resource information such as endpoint URLs and exposing them to your tests via easily-imported helper functions.

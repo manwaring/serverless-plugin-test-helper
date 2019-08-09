@@ -2,7 +2,7 @@
 .dependabot/
 .nyc_output/
 coverage/
-dist/**/*.cucumber*
+dist/**/*.test*
 dist/**/*/mock-data/**
 src/
 examples/
