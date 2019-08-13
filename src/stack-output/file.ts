@@ -30,7 +30,7 @@ export class StackOutputFile {
         return JSON.stringify(data, null, 2);
       case 'YAML':
       case 'YML':
-        return require('js-yaml').safeDump(data);
+        return require('js-yaml').safeDump(data, { lineWidth: 240 });
       default:
         throw new Error(`No formatter found for '${this.extension}' extension`);
     }
