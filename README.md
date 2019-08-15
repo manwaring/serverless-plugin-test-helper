@@ -24,8 +24,8 @@ Running tests on deployed services (vs locally mocked ones) is an important fina
 
 The package has two parts:
 
-1. A [Serverless Framework plugin](https://github.com/serverless/plugins) which extends `sls deploy` to save a local copy of the generated CloudFormation Stack Output
-1. A standard Node.js library which can be imported to access stack output values in tests (or any other code you want to run post-deployment)
+1. A [Serverless Framework plugin](https://github.com/serverless/plugins) which extends `sls deploy` to save a copy of the generated CloudFormation Stack Output locally
+1. A standard Node.js library which can be imported to access local stack output values in tests (or any other code you want to run post-deployment)
 
 # Installation and setup
 
@@ -126,7 +126,7 @@ Due to tight coupling with managed services and the difficulty in mocking those 
 1. Run unit tests
 1. Deploy to a dynamic, non-production environment (using `--stage <branch or username>` option in Serverless Framework)
 1. Run e2e tests in the dynamic, non-production environment
-1. Cleanup stale ephemeral environments with an automated solution [like Odin](https://github.com/manwaring/odin)
+1. Automate the cleanup of stale ephemeral environments with a solution [like Odin](https://github.com/manwaring/odin)
 
 \* Note that these kinds of pipelines work best using [trunk based development](https://trunkbaseddevelopment.com/)
 
