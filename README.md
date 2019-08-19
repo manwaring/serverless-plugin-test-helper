@@ -3,9 +3,9 @@
   <img height="150" src="https://user-images.githubusercontent.com/2955468/50581158-0b705200-0e25-11e9-9fd5-0fe422e00f2e.png">
 </p>
 
-[![version][version]][version-url] [![downloads][downloads]][downloads-url] [![coverage][coverage]][coverage-url] [![size][size]][size-url] [![license][license]][license-url]
+[![version]][version-url] [![downloads]][downloads-url] [![coverage]][coverage-url] [![size]][size-url] [![license]][license-url]
 
-[![Build][build]][build-url] [![dependabot][dependabot]][dependabot-url] [![dependencies][dependency]][dependency-url] [![dev dependencies][dev-dependency]][dev-dependency-url]
+[![build]][build-url] [![dependabot]][dependabot-url] [![dependency]][dependency-url] [![dev-dependency]][dev-dependency-url]
 
 # Serverless plugin test helper
 
@@ -13,7 +13,7 @@
 1. [Installation and setup](#installation-and-setup)
    1. [Plugin setup and optional configuration](#plugin-setup-and-optional-configuration)
    1. [Library setup](#library-setup)
-1. [Examples](#Examples)
+1. [Examples](#examples)
 1. [An opinionated approach to serverless testing](#an-opinionated-approach-to-serverless-testing)
 
 _Feedback appreciated! If you have an idea for how this plugin can be improved [please open an issue](https://github.com/manwaring/serverless-plugin-test-helper/issues/new)._
