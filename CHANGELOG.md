@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html)
 
+## [1.3.0]&nbsp;&nbsp;(2019-09-30)
+
+### Added
+
+- Mock context for passing to Lambda handlers in unit tests
+
+### Changed
+
+- Switched from Cucumber to Jest
+
 ## [1.2.2]&nbsp;&nbsp;(2019-09-06)
 
 ### Changed
@@ -60,6 +70,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/), 
 - Clarify project intent and provide additional examples in README
 - Publish now happens from git tags instead of master merges
 
+[1.2.3]: https://github.com/manwaring/serverless-plugin-test-helper/compare/v1.2.2...v1.3.0
 [1.2.2]: https://github.com/manwaring/serverless-plugin-test-helper/compare/v1.2.1...v1.2.2
 [1.2.1]: https://github.com/manwaring/serverless-plugin-test-helper/compare/v1.2.0...v1.2.1
 [1.2.0]: https://github.com/manwaring/serverless-plugin-test-helper/compare/v1.1.3...v1.2.0
