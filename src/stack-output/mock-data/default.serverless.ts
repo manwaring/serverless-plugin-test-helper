@@ -1,4 +1,4 @@
-import cloneDeep = require('lodash/cloneDeep');
+import cloneDeep from 'lodash/cloneDeep';
 
 const provider: Serverless.Provider.Aws = {
   getProviderName: () => '',
@@ -38,17 +38,13 @@ export const defaultOptions: Serverless.Options = {
   region: ''
 };
 
-function log(message: string) {
-  console.log(message);
-}
-
 export const defaultServerless: Serverless = {
   init: () => null,
   run: () => null,
   setProvider: (name: string, provider: Serverless.Provider.Aws) => null,
   getProvider: (name: string) => provider,
   getVersion: () => '',
-  cli: { log },
+  cli: { log: () => {} },
   config: { servicePath: '' },
   region: 'us-east-1',
   service: {

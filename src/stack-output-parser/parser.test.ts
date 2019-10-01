@@ -1,59 +1,46 @@
-import { binding, then, given, when } from 'cucumber-tsflow';
-import { expect } from 'chai';
 import { StackOutputFile } from '../stack-output/file';
 import { DEFAULT_OUTPUTS_PATH } from '../stack-output/plugin';
 import { getDeployedUrl, getDeploymentBucket, getOutput } from './parser';
 import { output } from './mock-data';
 
-@binding()
-class ParserTest {
-  retrieved: string;
+describe('Stack output parser', () => {
+  const OLD_ENVS = process.env;
 
-  @given(/a valid stack outputs file exists/)
-  public validStackOutput() {
-    const file = new StackOutputFile(DEFAULT_OUTPUTS_PATH, output);
-    file.save();
-  }
+  const file = new StackOutputFile(DEFAULT_OUTPUTS_PATH, output);
+  file.save();
 
-  @when(/the deployed URL is retrieved/)
-  public urlRetrieved() {
-    this.retrieved = getDeployedUrl();
-  }
+  afterEach(() => {
+    jest.resetAllMocks();
+    process.env = OLD_ENVS;
+  });
 
-  @when(/the deployment bucket is retrieved/)
-  public bucketRetrieved() {
-    this.retrieved = getDeploymentBucket();
-  }
+  it('Gets the deployed URL from stack output', () => {
+    const urlFromFile = getDeployedUrl();
+    const actualUrl = output.ServiceEndpoint;
+    expect(urlFromFile).toEqual(actualUrl);
+  });
 
-  @when(/an output value is retrieved/)
-  public valueRetrieved() {
-    this.retrieved = getOutput('MockLambdaFunctionQualifiedArn');
-  }
+  it('Gets the serverless deployment bucket from stack output', () => {
+    const deploymentBucketFromFile = getDeploymentBucket();
+    const actualDeploymentBucket = output.ServerlessDeploymentBucketName;
+    expect(deploymentBucketFromFile).toEqual(actualDeploymentBucket);
+  });
 
-  @when(/an output value that doesn't exist is retrieved/)
-  public missingValueRetrieved() {
-    this.retrieved = getOutput('AnythingAtAll');
-  }
+  it('Gets a valid property from the stack output', () => {
+    const propertyFromFile = getOutput('MockLambdaFunctionQualifiedArn');
+    const actualProperty = output.MockLambdaFunctionQualifiedArn;
+    expect(propertyFromFile).toEqual(actualProperty);
+  });
 
-  @then(/the URL matches the file value/)
-  public urlMatches() {
-    expect(this.retrieved).to.equal(output.ServiceEndpoint);
-  }
+  it('Gets an empty value for non-existent property', () => {
+    const missingProperty = getOutput('AnythingAtAll');
+    expect(missingProperty).toBeUndefined();
+  });
 
-  @then(/the bucket matches the file value/)
-  public bucketMatches() {
-    expect(this.retrieved).to.equal(output.ServerlessDeploymentBucketName);
-  }
-
-  @then(/the value matches the file value/)
-  public valueMatches() {
-    expect(this.retrieved).to.equal(output.MockLambdaFunctionQualifiedArn);
-  }
-
-  @then(/the value is empty/)
-  public valueEmpty() {
-    expect(this.retrieved).to.equal('');
-  }
-}
-
-export = ParserTest;
+  it('Logs when debug env variable is set', () => {
+    process.env.DEBUG = 'true';
+    console.log = jest.fn();
+    const urlFromFile = getDeployedUrl();
+    expect(console.log).toHaveBeenCalled();
+  });
+});

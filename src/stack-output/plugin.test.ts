@@ -1,52 +1,26 @@
-import { binding, then, given, when } from 'cucumber-tsflow';
-import { expect } from 'chai';
+import { existsSync } from 'fs';
 import { StackOutputPlugin, DEFAULT_OUTPUTS_PATH } from './plugin';
 import { defaultServerless, defaultOptions, customServerless, invalidServerless } from './mock-data';
-import { existsSync } from 'fs';
 
-@binding()
-class StackOutputPluginTest {
-  plugin: StackOutputPlugin;
-  attempt: Function;
+describe('Serverless plugin', () => {
+  it('Saves file to default path when none specified', async () => {
+    const plugin = new StackOutputPlugin(defaultServerless, defaultOptions);
+    await plugin.getAndSaveStackOutput();
+    const fileExistsInSpecifiedLocation = existsSync(DEFAULT_OUTPUTS_PATH);
+    expect(fileExistsInSpecifiedLocation).toEqual(true);
+  });
 
-  @given(/a plugin with no path specified/)
-  public givenNoPathPlugin() {
-    this.plugin = new StackOutputPlugin(defaultServerless, defaultOptions);
-  }
+  it('Saves file to custom path when specified', async () => {
+    const plugin = new StackOutputPlugin(customServerless, defaultOptions);
+    await plugin.getAndSaveStackOutput();
+    const filePath = customServerless.service.custom.testHelper.path;
+    const fileExistsInSpecifiedLocation = existsSync(filePath);
+    expect(fileExistsInSpecifiedLocation).toEqual(true);
+  });
 
-  @given(/a plugin with custom path specified/)
-  public givenCustomPathPlugin() {
-    this.plugin = new StackOutputPlugin(customServerless, defaultOptions);
-  }
-
-  @given(/a plugin with invalid configurations/)
-  public givenInvalidPlugin() {
-    this.attempt = () => new StackOutputPlugin(invalidServerless, defaultOptions);
-  }
-
-  @when(/the plugin is invoked/)
-  public async pluginInvoked() {
-    await this.plugin.getAndSaveStackOutput();
-  }
-
-  @then(/the testing stack output file is saved/)
-  public testingStackOutputSaved() {
-    const path = DEFAULT_OUTPUTS_PATH;
-    const exists = existsSync(path);
-    expect(exists).to.be.true;
-  }
-
-  @then(/the custom stack output file is saved/)
-  public customStackOutputSaved() {
-    const path = customServerless.service.custom.testHelper.path;
-    const exists = existsSync(path);
-    expect(exists).to.be.true;
-  }
-
-  @then(/an error occurs/)
-  public errorOccurs() {
-    expect(this.attempt).to.throw();
-  }
-}
-
-export = StackOutputPluginTest;
+  it('Throws error from invalid configuration', () => {
+    // @ts-ignore
+    const attempt = () => new StackOutputPlugin({}, defaultOptions);
+    expect(attempt).toThrowError();
+  });
+});

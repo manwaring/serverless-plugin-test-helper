@@ -19,5 +19,5 @@ export function getOutput(key: string): string {
   }
   const localFile = safeLoad(readFileSync(DEFAULT_OUTPUTS_PATH, 'utf-8'));
   let matching = Object.keys(localFile).find(k => k.toUpperCase() === key.toUpperCase());
-  return matching ? localFile[matching] : '';
+  return matching ? localFile[matching] : undefined;
 }

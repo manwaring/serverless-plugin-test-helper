@@ -1,40 +1,37 @@
 import { existsSync } from 'fs';
-import { binding, then, given, when } from 'cucumber-tsflow';
-import { expect } from 'chai';
 import { StackOutputFile } from './file';
 
-@binding()
-class StackOutputFileTest {
-  file: StackOutputFile;
-  attempt: Function;
+describe('Output file', () => {
+  it('Writes a file to the correct location', () => {
+    const data = { foo: 'bar' };
+    const paths = [
+      '.test-output/file/test.yaml',
+      '.test-output/file/test.yml',
+      '.test-output/file/test.json',
+      '.test.yaml',
+      '.test.yml',
+      '.test.json'
+    ];
+    paths.forEach(path => {
+      const file = new StackOutputFile(path, data);
+      file.save();
+      const fileExistsInSpecifiedLocation = existsSync(path);
+      expect(fileExistsInSpecifiedLocation).toEqual(true);
+    });
+  });
 
-  @given(/valid path '([^"]*)' and data '(.*)'/s)
-  public givenSupportedPath(path: string, dataString: string) {
-    const data = JSON.parse(dataString);
-    this.file = new StackOutputFile(path, data);
-  }
-
-  @given(/unsupported path '([^"]*)' and data '(.*)'/s)
-  public givenUnsupportedPath(path: string, dataString: string) {
-    const data = JSON.parse(dataString);
-    this.attempt = () => new StackOutputFile(path, data);
-  }
-
-  @when(/the file is saved/)
-  public fileIsSaved() {
-    this.file.save();
-  }
-
-  @then(/an error occurs/)
-  public errorOccurs() {
-    expect(this.attempt).to.throw();
-  }
-
-  @then(/a file is created at path '([^"]*)'/)
-  public successfullyWritten(path: string) {
-    const existsInSpecifiedLocation = existsSync(path);
-    expect(existsInSpecifiedLocation).to.be.true;
-  }
-}
-
-export = StackOutputFileTest;
+  it('Throws an error given unsupported file type', () => {
+    const data = { foo: 'bar' };
+    const paths = [
+      '.test-output/file/test.toml',
+      '.test-output/file/test.zip',
+      '.test-output/file/test.zip',
+      '.test-output/file/test.xml',
+      '.test-output/file/test.csv'
+    ];
+    paths.forEach(path => {
+      const attempt = () => new StackOutputFile(path, data);
+      expect(attempt).toThrowError();
+    });
+  });
+});

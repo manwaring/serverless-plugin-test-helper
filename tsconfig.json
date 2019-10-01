@@ -5,6 +5,7 @@
     "module": "commonjs",
     "declaration": false,
     "experimentalDecorators": true,
+    "esModuleInterop": true,
     "inlineSourceMap": true,
     "typeRoots": ["node_modules/@types", "typings"]
   },
