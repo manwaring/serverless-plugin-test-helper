@@ -1,4 +1,4 @@
-import { getDeployedUrl } from './stack-output-parser';
+import { getDeployedUrl, getOutput } from './stack-output-parser';
 import { StackOutputPlugin } from './stack-output';
 import { context } from './mock-signature';
 
@@ -6,3 +6,4 @@ import { context } from './mock-signature';
 module.exports = StackOutputPlugin;
 module.exports.getDeployedUrl = getDeployedUrl;
 module.exports.context = context;
+module.exports.getOutput = getOutput;
