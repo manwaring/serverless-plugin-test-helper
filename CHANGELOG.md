@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html)
 
+## [2.0.0]&nbsp;&nbsp;(2020-01-22)
+
+### Added
+
+- Added a default callback object in addition to the context object already specified
+- Added the first mock event generator for AWS Lambda triggers (ApiGateway event)
+
+### Changed
+
+- Updated the name of method 'getDeployedUrl()' to 'getApiGatewayUrl()' for additional clarity
+- Switched tests from Cucumber to Jest
+
+### Fixed
+
+- Added missing 'getOutput' method to library
+
 ## [1.3.1]&nbsp;&nbsp;(2019-10-15)
 
 ### Fixed
@@ -76,6 +92,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/), 
 - Clarify project intent and provide additional examples in README
 - Publish now happens from git tags instead of master merges
 
+[2.0.0]: https://github.com/manwaring/serverless-plugin-test-helper/compare/v1.3.1...v2.0.0
 [1.3.1]: https://github.com/manwaring/serverless-plugin-test-helper/compare/v1.3.0...v1.3.1
 [1.3.0]: https://github.com/manwaring/serverless-plugin-test-helper/compare/v1.2.2...v1.3.0
 [1.2.2]: https://github.com/manwaring/serverless-plugin-test-helper/compare/v1.2.1...v1.2.2

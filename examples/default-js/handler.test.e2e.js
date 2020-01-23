@@ -1,9 +1,9 @@
 const { Given, Then } = require('cucumber');
 const { expect } = require('chai');
 const { get } = require('request-promise-native');
-const { getDeployedUrl } = require('serverless-plugin-test-helper');
+const { getApiGatewayUrl } = require('serverless-plugin-test-helper');
 
-const URL = getDeployedUrl();
+const URL = getApiGatewayUrl();
 
 Given('we call hello', async () => {
   this.response = JSON.parse(await get(`${URL}/hello`));

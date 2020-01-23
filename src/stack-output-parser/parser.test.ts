@@ -1,6 +1,6 @@
 import { StackOutputFile } from '../stack-output/file';
 import { DEFAULT_OUTPUTS_PATH } from '../stack-output/plugin';
-import { getDeployedUrl, getDeploymentBucket, getOutput } from './parser';
+import { getApiGatewayUrl, getDeployedUrl, getDeploymentBucket, getOutput } from './parser';
 import { output } from './mock-data';
 
 describe('Stack output parser', () => {
@@ -15,6 +15,12 @@ describe('Stack output parser', () => {
   });
 
   it('Gets the deployed URL from stack output', () => {
+    const urlFromFile = getApiGatewayUrl();
+    const actualUrl = output.ServiceEndpoint;
+    expect(urlFromFile).toEqual(actualUrl);
+  });
+
+  it('Gets the deployed URL from stack output with deprecated getDeployedUrl', () => {
     const urlFromFile = getDeployedUrl();
     const actualUrl = output.ServiceEndpoint;
     expect(urlFromFile).toEqual(actualUrl);
@@ -40,7 +46,7 @@ describe('Stack output parser', () => {
   it('Logs when debug env variable is set', () => {
     process.env.DEBUG = 'true';
     console.log = jest.fn();
-    const urlFromFile = getDeployedUrl();
+    const urlFromFile = getApiGatewayUrl();
     expect(console.log).toHaveBeenCalled();
   });
 });

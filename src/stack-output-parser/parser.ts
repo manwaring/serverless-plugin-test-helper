@@ -3,6 +3,10 @@ import { readFileSync } from 'fs';
 import { DEFAULT_OUTPUTS_PATH } from '../stack-output/plugin';
 
 export function getDeployedUrl(): string {
+  return getApiGatewayUrl();
+}
+
+export function getApiGatewayUrl(): string {
   const SERVICE_ENDPOINT_KEY = 'ServiceEndpoint';
   return getOutput(SERVICE_ENDPOINT_KEY);
 }

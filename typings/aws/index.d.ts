@@ -12,3 +12,5 @@ declare interface Context {
   fail: () => any;
   succeed: () => any;
 }
+
+declare interface Callback {}

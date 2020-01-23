@@ -1,18 +1,39 @@
 <p align="center">
-  <img height="150" src="https://avatars0.githubusercontent.com/u/36457275?s=400&u=16d355f384ed7f8e0655b7ed1d70ff2e411690d8&v=4e">
-  <img height="150" src="https://user-images.githubusercontent.com/2955468/50581158-0b705200-0e25-11e9-9fd5-0fe422e00f2e.png">
+  <img height="140" src="https://avatars0.githubusercontent.com/u/36457275?s=400&u=16d355f384ed7f8e0655b7ed1d70ff2e411690d8&v=4e">
+  <img height="140" src="https://user-images.githubusercontent.com/2955468/50581158-0b705200-0e25-11e9-9fd5-0fe422e00f2e.png">
 </p>
 
-[![version]][version-url] [![downloads]][downloads-url] [![coverage]][coverage-url] [![size]][size-url] [![license]][license-url]
+<p align="center">
+  <a href="https://npmjs.com/package/serverless-plugin-test-helper">
+    <img src="https://flat.badgen.net/npm/v/serverless-plugin-test-helper?icon=npm&label=npm@latest"></a>
+  <a href="https://www.npmjs.com/package/serverless-plugin-test-helper">
+    <img src="https://flat.badgen.net/npm/dt/serverless-plugin-test-helper?icon=npm"></a>
+  <a href="https://codecov.io/gh/manwaring/serverless-plugin-test-helper">
+    <img src="https://flat.badgen.net/codecov/c/github/manwaring/serverless-plugin-test-helper/?icon=codecov"></a>
+  <a href="https://packagephobia.now.sh/result?p=@manwaring/serverless-plugin-test-helper">
+    <img src="https://flat.badgen.net/packagephobia/install/serverless-plugin-test-helper"></a>
+  <a href="https://www.npmjs.com/package/serverless-plugin-test-helper">
+    <img src="https://flat.badgen.net/npm/license/serverless-plugin-test-helper"></a>
+</p>
 
-[![build]][build-url] [![dependabot]][dependabot-url] [![dependency]][dependency-url] [![dev-dependency]][dev-dependency-url]
+<p align="center">
+  <a href="https://circleci.com/gh/manwaring/serverless-plugin-test-helper">
+    <img src="https://flat.badgen.net/circleci/github/manwaring/serverless-plugin-test-helper/master?icon=circleci"></a>
+  <a href="https://flat.badgen.net/dependabot/manwaring/serverless-plugin-test-helper">
+    <img src="https://flat.badgen.net/dependabot/manwaring/serverless-plugin-test-helper/?icon=dependabot&label=dependabot"></a>
+  <a href="https://david-dm.org/manwaring/serverless-plugin-test-helper">
+    <img src="https://flat.badgen.net/david/dep/manwaring/serverless-plugin-test-helper"></a>
+  <a href="https://david-dm.org/manwaring/serverless-plugin-test-helper?type=dev">
+    <img src="https://flat.badgen.net/david/dev/manwaring/serverless-plugin-test-helper/?label=dev+dependencies"></a>
+</p>
 
 # Serverless plugin test helper
 
 1. [Overview](#overview)
 1. [Installation and setup](#installation-and-setup)
    1. [Plugin setup and optional configuration](#plugin-setup-and-optional-configuration)
-   1. [Library setup](#library-setup)
+   1. [Using the library to retrieve stack outputs](#using-the-library-to-retrieve-stack-outputs)
+      <!-- 1. [Using the library for event mocks](#using-the-library-for-event-mocks) -->
 1. [Examples](#examples)
 1. [An opinionated approach to serverless testing](#an-opinionated-approach-to-serverless-testing)
 
@@ -24,8 +45,9 @@ Running tests on deployed services (vs locally mocked ones) is an important fina
 
 The package has two parts:
 
-1. A [Serverless Framework plugin](https://github.com/serverless/plugins) which extends `sls deploy` to save a copy of the generated CloudFormation Stack Output locally
-1. A standard Node.js library which can be imported to access local stack output values in tests (or any other code you want to run post-deployment)
+1. A [Serverless Framework plugin](https://github.com/serverless/plugins) which extends `sls deploy` to save a copy of the generated CloudFormation Stack Output locally. _This functionality can be used without the other two components_
+1. A standard Node.js library which can be imported to access local stack output values in tests (or any other code you want to run post-deployment). _This functionality requires the stack output component above to work, but can be used without incorporating the event mocking component below_
+   <!-- 1. The standard Node.js library also includes helpful mocks for the AWS Lambda method signature, including the ability to easily generate mock events for the various event sources. _This functionality can be used without the other two components_ -->
 
 # Installation and setup
 
@@ -34,6 +56,8 @@ Install and save the package to `package.json` as a dev dependency:
 `npm i --save-dev serverless-plugin-test-helper`
 
 ## Plugin setup and optional configuration
+
+<!-- **This setup is only required if you want to generate a local file with CloudFormation stack outputs and/or use those outputs during testing** -->
 
 Add the package to the `serverless.yml` plugins section:
 
@@ -50,16 +74,16 @@ custom:
     path: optional/path/for/another/outputs[ .yml | .yaml | .json ]
 ```
 
-## Library setup
+## Using the library to retrieve stack outputs
 
 Import the helper functions into your test files to retrieve values from deployed stack output:
 
 Using TypeScript:
 
 ```ts
-import { getDeployedUrl, getDeploymentBucket, getOutput } from 'serverless-plugin-test-helper';
+import { getApiGatewayUrl, getDeploymentBucket, getOutput } from 'serverless-plugin-test-helper';
 
-const URL = getDeployedUrl();
+const URL = getApiGatewayUrl();
 const BUCKET_NAME = getDeploymentBucket();
 const DOCUMENT_STORAGE_BUCKET_NAME = getOutput('DocumentStorageBucket');
 ```
@@ -67,14 +91,18 @@ const DOCUMENT_STORAGE_BUCKET_NAME = getOutput('DocumentStorageBucket');
 Using JavaScript:
 
 ```js
-const { getDeployedUrl, getDeploymentBucket, getOutput } = require('serverless-plugin-test-helper');
+const { getApiGatewayUrl, getDeploymentBucket, getOutput } = require('serverless-plugin-test-helper');
 
-const URL = getDeployedUrl();
+const URL = getApiGatewayUrl();
 const BUCKET_NAME = getDeploymentBucket();
 const DOCUMENT_STORAGE_BUCKET_NAME = getOutput('DocumentStorageBucket');
 ```
 
-To see what output values are available for reference you can check the generated `.serverless/stack-output/outputs.yml` file after a deployment. To make additional values available you can specify up to 60 CloudFormation Stack Outputs in `serverless.yml` using the resources > Outputs section:
+- `getApiGatewayUrl()` returns the url of the deployed API Gateway service (if using `http` as an event type in `serverless.yml`)
+- `getDeploymentBucket()` returns the name of the bucket Serverless Framework generates for uploading CloudFormation templates and zipped source code files as part of the `sls deploy` process
+- `getOutput('[output key]')` returns the value of the Cloudformation stack output with the specified key\*
+
+\*To see what output values are available for reference you can check the generated `.serverless/stack-output/outputs.yml` file after a deployment. To make additional values available you can specify up to 60 CloudFormation Stack Outputs in `serverless.yml` using the resources > Outputs section:
 
 ```yml
 resources:
@@ -85,7 +113,7 @@ resources:
       Value: { Ref: CloudFormationParameterOrResourceYouWishToExport }
 
     # Example referencing a custom S3 bucket used for file storage (defined under Resources section below)
-    DocumentStorageBucket:
+    DocumentStorageBucket: # This is the key that will be used in the generated outputs file
       Description: Name of the S3 bucket used for document storage by this stack
       Value: { Ref: DocumentStorageBucket }
 
@@ -129,29 +157,3 @@ Due to tight coupling with managed services and the difficulty in mocking those 
 1. Automate the cleanup of stale ephemeral environments with a solution [like Odin](https://github.com/manwaring/odin)
 
 \* Note that these kinds of pipelines work best using [trunk based development](https://trunkbaseddevelopment.com/)
-
-<!-- Badge icons -->
-
-[version]: https://flat.badgen.net/npm/v/serverless-plugin-test-helper?icon=npm&label=npm@latest
-[downloads]: https://flat.badgen.net/npm/dt/serverless-plugin-test-helper?icon=npm
-[coverage]: https://flat.badgen.net/codecov/c/github/manwaring/serverless-plugin-test-helper/?icon=codecov
-[size]: https://flat.badgen.net/packagephobia/install/serverless-plugin-test-helper
-[license]: https://flat.badgen.net/npm/license/serverless-plugin-test-helper/
-[language]: https://flat.badgen.net/badge/typescript/typescript/?icon&label
-[style]: https://flat.badgen.net/badge/code%20style/prettier?color=purple&icon=terminal&label
-[build]: https://flat.badgen.net/circleci/github/manwaring/serverless-plugin-test-helper/master?icon=circleci
-[dependabot]: https://flat.badgen.net/dependabot/manwaring/serverless-plugin-test-helper/?icon=dependabot&label=dependabot
-[dependency]: https://flat.badgen.net/david/dep/manwaring/serverless-plugin-test-helper
-[dev-dependency]: https://flat.badgen.net/david/dev/manwaring/serverless-plugin-test-helper/?label=dev+dependencies
-
-<!-- Badge URLs -->
-
-[version-url]: https://npmjs.com/package/serverless-plugin-test-helper
-[downloads-url]: https://www.npmjs.com/package/serverless-plugin-test-helper
-[coverage-url]: https://codecov.io/gh/manwaring/serverless-plugin-test-helper
-[size-url]: https://packagephobia.now.sh/result?p=serverless-plugin-test-helper
-[license-url]: https://www.npmjs.com/package/serverless-plugin-test-helper
-[build-url]: https://circleci.com/gh/manwaring/serverless-plugin-test-helper
-[dependabot-url]: https://flat.badgen.net/dependabot/manwaring/serverless-plugin-test-helper
-[dependency-url]: https://david-dm.org/manwaring/serverless-plugin-test-helper
-[dev-dependency-url]: https://david-dm.org/manwaring/serverless-plugin-test-helper?type=dev

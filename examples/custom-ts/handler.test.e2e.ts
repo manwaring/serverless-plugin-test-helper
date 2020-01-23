@@ -1,9 +1,9 @@
 import { binding, then, when } from 'cucumber-tsflow';
 import { expect } from 'chai';
 import { get } from 'request-promise-native';
-import { getDeployedUrl } from 'serverless-plugin-test-helper';
+import { getApiGatewayUrl } from 'serverless-plugin-test-helper';
 
-const URL = getDeployedUrl();
+const URL = getApiGatewayUrl();
 
 @binding()
 export class HelloTest {
