@@ -98,6 +98,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/), 
 - Clarify project intent and provide additional examples in README
 - Publish now happens from git tags instead of master merges
 
+[2.0.1]: https://github.com/manwaring/serverless-plugin-test-helper/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/manwaring/serverless-plugin-test-helper/compare/v1.3.1...v2.0.0
 [1.3.1]: https://github.com/manwaring/serverless-plugin-test-helper/compare/v1.3.0...v1.3.1
 [1.3.0]: https://github.com/manwaring/serverless-plugin-test-helper/compare/v1.2.2...v1.3.0
