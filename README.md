@@ -31,9 +31,8 @@
 
 1. [Overview](#overview)
 1. [Installation and setup](#installation-and-setup)
-   1. [Plugin setup and optional configuration](#plugin-setup-and-optional-configuration)
-   1. [Using the library to retrieve stack outputs](#using-the-library-to-retrieve-stack-outputs)
-      <!-- 1. [Using the library for event mocks](#using-the-library-for-event-mocks) -->
+   1. [E2E testing support setup & configuration](#e2e-testing-support-setup--configuration)
+   1. [AWS event mocks](#aws-event-mocks)
 1. [Examples](#examples)
 1. [An opinionated approach to serverless testing](#an-opinionated-approach-to-serverless-testing)
 
@@ -41,25 +40,24 @@ _Feedback appreciated! If you have an idea for how this plugin can be improved [
 
 # Overview
 
-Running tests on deployed services (vs locally mocked ones) is an important final step in a robust serverless deployment pipeline because it isn't possible to recreate all aspects of a final solution locally - concerns such as fine-grained resource access through IAM and scalability/performance characteristics of the system can only be assessed while the application is running on AWS. Running these tests on stage/branch-specific versions of the application (see [serverless testing best practices below](#serverless-testing-best-practices)) is difficult to do given the dynamic nature of AWS resource naming. This package makes it easier to write post-deployment tests for applications and services written and deployed using the [Serverless Framework](https://serverless.com/framework/) by locally persisting dynamic AWS resource information such as endpoint URLs and exposing them to your tests via easily-imported helper functions.
+Running tests on deployed services (vs locally mocked ones) is an important final step in a robust serverless deployment pipeline because it isn't possible to recreate all aspects of a final solution locally - concerns such as fine-grained resource access through IAM and scalability/performance characteristics of the system can only be assessed while the application is running on AWS. Running these tests on stage/branch-specific versions of the application (see [serverless testing best practices below](#serverless-testing-best-practices)) is difficult to do given the dynamic nature of AWS resource naming. This library makes it easier to write post-deployment tests for applications and services written and deployed using the [Serverless Framework](https://serverless.com/framework/) by locally persisting dynamic AWS resource information such as endpoint URLs and exposing them to your tests via easily-imported helper functions.
 
-The package has two parts:
-
-1. A [Serverless Framework plugin](https://github.com/serverless/plugins) which extends `sls deploy` to save a copy of the generated CloudFormation Stack Output locally. _This functionality can be used without the other two components_
-1. A standard Node.js library which can be imported to access local stack output values in tests (or any other code you want to run post-deployment). _This functionality requires the stack output component above to work, but can be used without incorporating the event mocking component below_
-   <!-- 1. The standard Node.js library also includes helpful mocks for the AWS Lambda method signature, including the ability to easily generate mock events for the various event sources. _This functionality can be used without the other two components_ -->
+Because unit tests with mocked AWS services are still an important part of a well-tested service (especially for fast developer feedback), this library also includes helper functions to simplify the creation of mock events for the various AWS Lambda integrations.
 
 # Installation and setup
 
-Install and save the package to `package.json` as a dev dependency:
+Install and save the library to `package.json` as a dev dependency:
 
 `npm i --save-dev serverless-plugin-test-helper`
 
-## Plugin setup and optional configuration
+# E2E testing support setup & configuration
 
-<!-- **This setup is only required if you want to generate a local file with CloudFormation stack outputs and/or use those outputs during testing** -->
+This portion of the library includes the following two components.
 
-Add the package to the `serverless.yml` plugins section:
+1. A [Serverless Framework plugin](https://github.com/serverless/plugins) which extends `sls deploy` to save a copy of the generated CloudFormation Stack Output locally.
+1. A standard Node.js library which can be imported to access local stack output values in tests (or any other code you want to run post-deployment).
+
+To setup the plugin add the library to the `serverless.yml` plugins section:
 
 ```yml
 plugins:
@@ -78,20 +76,8 @@ custom:
 
 Import the helper functions into your test files to retrieve values from deployed stack output:
 
-Using TypeScript:
-
 ```ts
 import { getApiGatewayUrl, getDeploymentBucket, getOutput } from 'serverless-plugin-test-helper';
-
-const URL = getApiGatewayUrl();
-const BUCKET_NAME = getDeploymentBucket();
-const DOCUMENT_STORAGE_BUCKET_NAME = getOutput('DocumentStorageBucket');
-```
-
-Using JavaScript:
-
-```js
-const { getApiGatewayUrl, getDeploymentBucket, getOutput } = require('serverless-plugin-test-helper');
 
 const URL = getApiGatewayUrl();
 const BUCKET_NAME = getDeploymentBucket();
@@ -124,9 +110,41 @@ resources:
 
 See the [AWS CloudFormation documentation on outputs](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/outputs-section-structure.html) for more information
 
+# AWS event mocks
+
+Import the helper functions and static objects into your test files to generate AWS event and method signature mocks with optional value overrides. Note that this portion of the library can be used without using the E2E testing module.
+
+```ts
+import {
+  apiGatewayEvent,
+  cloudFormationCustomResourceEvent,
+  customAuthorizerEvent,
+  dynamoDBStreamEvent,
+  snsEvent,
+  context
+} from 'serverless-plugin-test-helper';
+import { handler } from './lambda-being-tested';
+
+// Setup events with optional value overrides
+const event = apiGatewayEvent({ body: 'overridden body value' });
+const event2 = cloudFormationCustomResourceEvent();
+const event3 = customAuthorizerEvent();
+const event4 = dynamoDBStreamEvent();
+const event5 = snsEvent();
+
+...
+
+// Invoke the handler functions with events
+const result = await handler(event, context);
+const result2 = await handler(event2, context);
+
+// TODO write your tests on the results
+
+```
+
 # Examples
 
-There are [three working examples](examples) of how this package can be used in a simple 'hello world' serverless application:
+There are [three working examples](examples) of how this library can be used in a simple 'hello world' serverless application:
 
 1. [Plugin with optional configurations in a TypeScript project](examples/custom-ts)
 1. [Using the default plugin configuration in a TypeScript project](examples/default-ts)

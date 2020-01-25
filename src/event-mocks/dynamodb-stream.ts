@@ -5,13 +5,8 @@ export function dynamoDBStreamEvent(override: NestedPartial<DynamoDBStreamEvent>
   const Records = override.Records
     ? all([defaultRecords, override.Records], { arrayMerge: combineMerge })
     : defaultRecords;
-  // @ts-ignore
-  return { Records };
+  return <DynamoDBStreamEvent>{ Records };
 }
-
-type NestedPartial<T> = {
-  [P in keyof T]?: NestedPartial<T[P]>;
-};
 
 function combineMerge(target, source, options) {
   const destination = target.slice();
@@ -20,8 +15,6 @@ function combineMerge(target, source, options) {
       destination[index] = options.cloneUnlessOtherwiseSpecified(item, options);
     } else if (options.isMergeableObject(item)) {
       destination[index] = all([target[index], item], options);
-    } else if (target.indexOf(item) === -1) {
-      destination.push(item);
     }
   });
   return destination;

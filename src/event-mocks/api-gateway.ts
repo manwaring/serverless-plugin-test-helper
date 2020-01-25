@@ -1,9 +1,8 @@
 import { APIGatewayEvent } from 'aws-lambda';
 import { all } from 'deepmerge';
 
-export function apiGatewayEvent(override: Partial<APIGatewayEvent> = {}): APIGatewayEvent {
-  // @ts-ignore
-  return all([defaultEvent, override]);
+export function apiGatewayEvent(override: NestedPartial<APIGatewayEvent> = {}): APIGatewayEvent {
+  return <APIGatewayEvent>all([defaultEvent, override]);
 }
 
 // source: https://serverless.com/framework/docs/providers/aws/events/apigateway/#example-lambda-proxy-event-default

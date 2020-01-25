@@ -1,7 +1,7 @@
 {
   "name": "serverless-plugin-test-helper",
   "description": "A utility library to help with testing deployed serverless applications",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "scripts": {
     "publish-please-dry-run": "publish-please --dry-run",
     "publish-please": "publish-please",
@@ -44,7 +44,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm test && npm build"
+      "pre-commit": "npm test && npm run build"
     }
   },
   "publishConfig": {
