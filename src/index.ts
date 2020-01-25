@@ -22,7 +22,7 @@ module.exports.getOutput = getOutput;
 // Lambda signature/event helpers
 module.exports.context = context;
 module.exports.apiGatewayEvent = apiGatewayEvent;
+module.exports.cloudFormationCustomResourceEvent = cloudFormationCustomResourceEvent;
+module.exports.customAuthorizerEvent = customAuthorizerEvent;
 module.exports.dynamoDBStreamEvent = dynamoDBStreamEvent;
 module.exports.snsEvent = snsEvent;
-module.exports.customAuthorizerEvent = customAuthorizerEvent;
-module.exports.cloudFormationCustomResourceEvent = cloudFormationCustomResourceEvent;
