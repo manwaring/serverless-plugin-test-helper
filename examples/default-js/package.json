@@ -8,8 +8,8 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "cucumber": "^5.1.0",
-    "cucumber-pretty": "^1.5.2",
+    "cucumber": "^6.0.5",
+    "cucumber-pretty": "^6.0.0",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.7",
     "serverless": "^1.49.0",
