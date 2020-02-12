@@ -21,7 +21,7 @@
     "cucumber-tsflow": "^3.2.0",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.7",
-    "serverless": "^1.49.0",
+    "serverless": "^1.63.0",
     "serverless-plugin-test-helper": "*",
     "serverless-webpack": "^5.2.0",
     "ts-loader": "^6.0.4",
