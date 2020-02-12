@@ -4,11 +4,17 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html)
 
+## [2.1.2]&nbsp;&nbsp;(2020-02-11)
+
+### Changed
+
+- Add better example source arn to dynamodb stream mock event
+
 ## [2.1.1]&nbsp;&nbsp;(2020-02-11)
 
 ### Changed
 
-- Updated libraries
+- Update libraries
 
 ## [2.1.0]&nbsp;&nbsp;(2020-02-11)
 

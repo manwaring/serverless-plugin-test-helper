@@ -43,7 +43,7 @@ const defaultRecords: DynamoDBRecord[] = [
     },
     awsRegion: 'us-west-2',
     eventName: 'MODIFY',
-    eventSourceARN: 'sourcearn',
+    eventSourceARN: 'arn:aws:dynamodb:us-east-1:123456789012:table/images',
     eventSource: 'aws:dynamodb'
   }
 ];
