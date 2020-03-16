@@ -41,6 +41,8 @@ const defaultEvent: APIGatewayEvent = {
   requestContext: {
     path: '/dev/',
     accountId: '125002137610',
+    authorizer: undefined,
+    protocol: undefined,
     resourceId: 'qdolsr1yhk',
     stage: 'dev',
     requestId: '0f2431a2-6d2f-11e7-b799-5152aa497861',
