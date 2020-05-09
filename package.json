@@ -1,7 +1,7 @@
 {
   "name": "serverless-plugin-test-helper",
   "description": "A utility library to help with testing deployed serverless applications",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "scripts": {
     "publish-please-dry-run": "publish-please --dry-run",
     "publish-please": "publish-please",
@@ -60,6 +60,9 @@
   "homepage": "https://github.com/manwaring/serverless-plugin-test-helper",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
   "author": "From Phillip with ♥",
   "license": "MIT",
   "keywords": [

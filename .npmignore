@@ -1,16 +1,1 @@
-.circleci/
-.dependabot/
-.nyc_output/
-coverage/
-dist/**/*.test*
-dist/**/*/mock-data/**
-src/
-examples/
-typings/
-.gitignore
-.npmignore
-.nycrc.yml
-.prettierrc.yml
-.publishrc
-cucumber.js
-tsconfig*.json
+.test.
