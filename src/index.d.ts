@@ -9,7 +9,9 @@ import {
 } from 'aws-lambda';
 export interface ExtendedAPIGatewayEvent extends APIGatewayEvent {
   auth: {
-    claims: any;
+    claims: {
+      [key: string]: any;
+    };
     [key: string]: any;
   };
 }
