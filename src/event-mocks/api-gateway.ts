@@ -7,10 +7,26 @@ export function apiGatewayEvent(override: NestedPartial<ExtendedAPIGatewayEvent>
 
 export interface ExtendedAPIGatewayEvent extends APIGatewayEvent {
   auth: {
-    claims: any;
-    [key: string]: any;
+    claims: {
+      aud: string;
+      azp: string;
+      exp: string;
+      gty: string;
+      iat: string;
+      iss: string;
+      sub: string;
+    };
+    scopes: any;
   };
 }
+
+const auth = {
+  claims: {
+    sub: 'test-user',
+  },
+};
+
+apiGatewayEvent({ auth });
 
 // source: https://serverless.com/framework/docs/providers/aws/events/apigateway/#example-lambda-proxy-event-default
 

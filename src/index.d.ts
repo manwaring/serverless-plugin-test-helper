@@ -10,9 +10,15 @@ import {
 export interface ExtendedAPIGatewayEvent extends APIGatewayEvent {
   auth: {
     claims: {
-      [key: string]: any;
+      aud: string;
+      azp: string;
+      exp: string;
+      gty: string;
+      iat: string;
+      iss: string;
+      sub: string;
     };
-    [key: string]: any;
+    scopes: any;
   };
 }
 
