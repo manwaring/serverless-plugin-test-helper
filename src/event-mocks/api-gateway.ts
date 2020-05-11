@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { APIGatewayEvent } from 'aws-lambda';
 import { all } from 'deepmerge';
 
@@ -6,10 +7,23 @@ export function apiGatewayEvent(override: NestedPartial<APIGatewayEvent> = {}): 
 }
 
 // source: https://serverless.com/framework/docs/providers/aws/events/apigateway/#example-lambda-proxy-event-default
+
 const defaultEvent: APIGatewayEvent = {
   resource: '/',
   path: '/',
   httpMethod: 'POST',
+  auth: {
+    claims: {
+      aud: 'aud',
+      azp: 'azp',
+      exp: '123',
+      gty: 'client-credentials',
+      iat: '123',
+      iss: 'url',
+      sub: 'uniqueid',
+    },
+    scopes: null,
+  },
   headers: {
     Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
     'Accept-Encoding': 'gzip, deflate, br',
@@ -33,7 +47,7 @@ const defaultEvent: APIGatewayEvent = {
     'X-Amzn-Trace-Id': 'Root=1-597079de-75fec8453f6fd4812414a4cd',
     'X-Forwarded-For': '50.129.117.14, 50.112.234.94',
     'X-Forwarded-Port': '443',
-    'X-Forwarded-Proto': 'https'
+    'X-Forwarded-Proto': 'https',
   },
   queryStringParameters: null,
   pathParameters: null,
@@ -62,14 +76,14 @@ const defaultEvent: APIGatewayEvent = {
         'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36',
       user: null,
       apiKeyId: null,
-      principalOrgId: null
+      principalOrgId: null,
     },
     resourcePath: '/',
     httpMethod: 'POST',
-    apiId: 'j3azlsj0c4'
+    apiId: 'j3azlsj0c4',
   },
   body: 'postcode=LS17FR',
   isBase64Encoded: false,
   multiValueHeaders: null,
-  multiValueQueryStringParameters: null
+  multiValueQueryStringParameters: null,
 };
