@@ -1,14 +1,17 @@
-// @ts-nocheck
 import { APIGatewayEvent } from 'aws-lambda';
 import { all } from 'deepmerge';
 
-export function apiGatewayEvent(override: NestedPartial<APIGatewayEvent> = {}): APIGatewayEvent {
-  return <APIGatewayEvent>all([defaultEvent, override]);
+export function apiGatewayEvent(override: NestedPartial<ExtendedAPIGatewayEvent> = {}): ExtendedAPIGatewayEvent {
+  return <ExtendedAPIGatewayEvent>all([defaultEvent, override]);
+}
+
+export interface ExtendedAPIGatewayEvent extends APIGatewayEvent {
+  auth: any;
 }
 
 // source: https://serverless.com/framework/docs/providers/aws/events/apigateway/#example-lambda-proxy-event-default
 
-const defaultEvent: APIGatewayEvent = {
+const defaultEvent: ExtendedAPIGatewayEvent = {
   resource: '/',
   path: '/',
   httpMethod: 'POST',
