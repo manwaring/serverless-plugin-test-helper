@@ -8,7 +8,10 @@ import {
   CloudFormationCustomResourceEvent,
 } from 'aws-lambda';
 export interface ExtendedAPIGatewayEvent extends APIGatewayEvent {
-  auth: any;
+  auth: {
+    claims: any;
+    [key: string]: any;
+  };
 }
 
 // Getting stack output
