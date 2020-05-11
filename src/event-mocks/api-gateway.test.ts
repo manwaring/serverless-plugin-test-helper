@@ -4,9 +4,9 @@ describe('API Gateway event', () => {
   it('Overrides properties correctly', () => {
     const override = {
       httpMethod: 'GET',
-      headers: { 'content-type': 'application/json' },
+      headers: { 'content-type': 'application/x-www-form-urlencoded' },
       queryStringParameters: { param: 'value' },
-      body: null
+      body: null,
     };
     const event = apiGatewayEvent(override);
     expect(event.httpMethod).toEqual(override.httpMethod);
@@ -19,7 +19,7 @@ describe('API Gateway event', () => {
   it('Returns default object when no overrides are specified', () => {
     const event = apiGatewayEvent();
     expect(event.httpMethod).toEqual('POST');
-    expect(event.headers['content-type']).toEqual('application/x-www-form-urlencoded');
+    expect(event.headers['content-type']).toEqual('application/json');
     expect(event.queryStringParameters).toEqual(null);
   });
 });

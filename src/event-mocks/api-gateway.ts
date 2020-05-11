@@ -49,7 +49,7 @@ const defaultEvent: ExtendedAPIGatewayEvent = {
     'CloudFront-Is-SmartTV-Viewer': 'false',
     'CloudFront-Is-Tablet-Viewer': 'false',
     'CloudFront-Viewer-Country': 'GB',
-    'content-type': 'application/x-www-form-urlencoded',
+    'content-type': 'application/json',
     Host: 'j3ap25j034.execute-api.eu-west-2.amazonaws.com',
     origin: 'https://j3ap25j034.execute-api.eu-west-2.amazonaws.com',
     Referer: 'https://j3ap25j034.execute-api.eu-west-2.amazonaws.com/dev/',
