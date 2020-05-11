@@ -5,8 +5,11 @@ import {
   DynamoDBStreamEvent,
   SNSEvent,
   CustomAuthorizerEvent,
-  CloudFormationCustomResourceEvent
+  CloudFormationCustomResourceEvent,
 } from 'aws-lambda';
+export interface ExtendedAPIGatewayEvent extends APIGatewayEvent {
+  auth: any;
+}
 
 // Getting stack output
 export function getDeployedUrl(): string;
@@ -16,7 +19,7 @@ export function getOutput(key: string): string;
 
 // Helper objects/functions for testing
 export const context: Context;
-export function apiGatewayEvent(override?: NestedPartial<APIGatewayEvent>): APIGatewayEvent;
+export function apiGatewayEvent(override?: NestedPartial<ExtendedAPIGatewayEvent>): ExtendedAPIGatewayEvent;
 export function cloudFormationCustomResourceEvent(
   override?: NestedPartial<CloudFormationCustomResourceEvent>
 ): CloudFormationCustomResourceEvent;
