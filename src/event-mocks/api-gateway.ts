@@ -20,14 +20,6 @@ export interface ExtendedAPIGatewayEvent extends APIGatewayEvent {
   };
 }
 
-const auth = {
-  claims: {
-    sub: 'test-user',
-  },
-};
-
-apiGatewayEvent({ auth });
-
 // source: https://serverless.com/framework/docs/providers/aws/events/apigateway/#example-lambda-proxy-event-default
 
 const defaultEvent: ExtendedAPIGatewayEvent = {
