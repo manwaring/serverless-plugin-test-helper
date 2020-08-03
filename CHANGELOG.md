@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html)
 
+## [2.4.1]&nbsp;&nbsp;(2020-08-03)
+
+### Fixed
+
+- HTTP API event type declarations
+
 ## [2.4.0]&nbsp;&nbsp;(2020-08-02)
 
 ### Added
@@ -180,7 +186,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/), 
 - Clarify project intent and provide additional examples in README
 - Publish now happens from git tags instead of master merges
 
-[2.4.0]: https://github.com/manwaring/serverless-plugin-test-helper/compare/v2.4.0...v2.4.0
+[2.4.1]: https://github.com/manwaring/serverless-plugin-test-helper/compare/v2.4.0...v2.4.1
+[2.4.0]: https://github.com/manwaring/serverless-plugin-test-helper/compare/v2.3.0...v2.4.0
 [2.3.0]: https://github.com/manwaring/serverless-plugin-test-helper/compare/v2.2.4...v2.3.0
 [2.1.3]: https://github.com/manwaring/serverless-plugin-test-helper/compare/v2.1.2...v2.1.3
 [2.1.1]: https://github.com/manwaring/serverless-plugin-test-helper/compare/v2.1.1...v2.1.1
