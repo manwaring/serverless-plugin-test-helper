@@ -62,5 +62,6 @@ dist
 
 # test output
 .test*
+.serverless
 
 .vscode
