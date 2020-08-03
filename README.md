@@ -120,6 +120,7 @@ import {
   cloudFormationCustomResourceEvent,
   customAuthorizerEvent,
   dynamoDBStreamEvent,
+  HttpApiEvent,
   snsEvent,
   context
 } from 'serverless-plugin-test-helper';
@@ -130,7 +131,8 @@ const event = apiGatewayEvent({ body: 'overridden body value' });
 const event2 = cloudFormationCustomResourceEvent();
 const event3 = customAuthorizerEvent();
 const event4 = dynamoDBStreamEvent();
-const event5 = snsEvent();
+const event5 = new HttpApiEvent();
+const event6 = snsEvent();
 
 ...
 

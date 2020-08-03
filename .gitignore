@@ -61,4 +61,6 @@ jspm_packages/
 dist
 
 # test output
-.test-output
+.test*
+
+.vscode
