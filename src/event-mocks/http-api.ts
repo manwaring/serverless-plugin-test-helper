@@ -66,8 +66,13 @@ const defaultEvent: HttpApiEvent = {
     authorizer: {
       jwt: {
         claims: {
-          claim1: 'value1',
-          claim2: 'value2',
+          aud: 'aud',
+          azp: 'azp',
+          exp: '123',
+          gty: 'client-credentials',
+          iat: '123',
+          iss: 'url',
+          sub: 'uniqueid',
         },
         scopes: ['scope1', 'scope2'],
       },

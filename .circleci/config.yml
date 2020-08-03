@@ -1,104 +1,47 @@
-# Note: YAML anchors allow an object to be re-used, reducing duplication. The ampersand
-# declares an alias for an object, then later the `<<: *alias` syntax dereferences it.
-#
-# See http://blog.daemonl.com/2016/02/yaml.html and
-# https://medium.com/@kinghuang/docker-compose-anchors-aliases-extensions-a1e4105d70bd
-# for more information about how to use anchors.
-#
-# To validate changes use an online parser, eg. http://yaml-online-parser.appspot.com/
-anchors:
-  container-config: &container-config
-    docker:
-      - image: circleci/node:lts
-        environment:
-          TERM: dumb
-
-  load-cache: &load-cache
-    restore_cache:
-      key: dependency-cache-{{ checksum "package.json" }}
-
-  # regex from https://circleci.com/blog/publishing-to-github-releases-via-circleci/
-  semVerRegExp: &semanticVersioning /(?<=^[Vv]|^)(?:(?<major>(?:0|[1-9](?:(?:0|[1-9])+)*))[.](?<minor>(?:0|[1-9](?:(?:0|[1-9])+)*))[.](?<patch>(?:0|[1-9](?:(?:0|[1-9])+)*))(?:-(?<prerelease>(?:(?:(?:[A-Za-z]|-)(?:(?:(?:0|[1-9])|(?:[A-Za-z]|-))+)?|(?:(?:(?:0|[1-9])|(?:[A-Za-z]|-))+)(?:[A-Za-z]|-)(?:(?:(?:0|[1-9])|(?:[A-Za-z]|-))+)?)|(?:0|[1-9](?:(?:0|[1-9])+)*))(?:[.](?:(?:(?:[A-Za-z]|-)(?:(?:(?:0|[1-9])|(?:[A-Za-z]|-))+)?|(?:(?:(?:0|[1-9])|(?:[A-Za-z]|-))+)(?:[A-Za-z]|-)(?:(?:(?:0|[1-9])|(?:[A-Za-z]|-))+)?)|(?:0|[1-9](?:(?:0|[1-9])+)*)))*))?(?:[+](?<build>(?:(?:(?:[A-Za-z]|-)(?:(?:(?:0|[1-9])|(?:[A-Za-z]|-))+)?|(?:(?:(?:0|[1-9])|(?:[A-Za-z]|-))+)(?:[A-Za-z]|-)(?:(?:(?:0|[1-9])|(?:[A-Za-z]|-))+)?)|(?:(?:0|[1-9])+))(?:[.](?:(?:(?:[A-Za-z]|-)(?:(?:(?:0|[1-9])|(?:[A-Za-z]|-))+)?|(?:(?:(?:0|[1-9])|(?:[A-Za-z]|-))+)(?:[A-Za-z]|-)(?:(?:(?:0|[1-9])|(?:[A-Za-z]|-))+)?)|(?:(?:0|[1-9])+)))*))?)$/
-
-  configure-aws-access: &configure-aws-access
-    run:
-      name: Configure AWS access
-      command: |
-        mkdir -p ~/.aws
-        cat > ~/.aws/credentials << EOL
-        [default]
-        aws_access_key_id = $AWS_ACCESS_KEY
-        aws_secret_access_key = $AWS_SECRET_ACCESS_KEY
-        EOL
-
 ## Circle CI configuration, see https://circleci.com/docs/2.0/configuration-reference/
-version: 2
+version: 2.1
+
+orbs:
+  node: circleci/node@3.0.0
+
 jobs:
-  install:
-    <<: *container-config
-    steps:
-      - checkout
-      - *load-cache
-      - run:
-          name: Install dependencies
-          command: npm i
-      - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-          paths:
-            - node_modules
-
-  test:
-    <<: *container-config
-    steps:
-      - checkout
-      - *load-cache
-      - run:
-          name: Test
-          command: npm test
-      - store_artifacts:
-          path: coverage
-      - run:
-          name: Send coverage to Codecov
-          command: npm run codecov
-
   publish:
-    <<: *container-config
+    executor: &node-lts
+      name: node/default
+      tag: lts
     steps:
       - checkout
-      - *load-cache
-      - run:
-          name: Set npm credentials
+      - node/install-packages
+      - run: &setup-private-npm
+          name: Set npm credentials for publishing
           command: echo "//registry.npmjs.org/:_authToken=$NPM_PUBLISH_TOKEN" >> ~/.npmrc
       - run:
           name: Publish on npm
           command: npm run publish-please
 
   test-default-ts-example:
-    <<: *container-config
+    executor: *node-lts
     steps:
       - checkout
-      - *load-cache
-      - *configure-aws-access
+      - node/install-packages
       - run:
           name: Deploy and test default example app
           command: npm run testexamples-default-ts
 
   test-default-js-example:
-    <<: *container-config
+    executor: *node-lts
     steps:
       - checkout
-      - *load-cache
-      - *configure-aws-access
+      - node/install-packages
       - run:
           name: Deploy and test default example app
           command: npm run testexamples-default-js
 
   test-custom-ts-example:
-    <<: *container-config
+    executor: *node-lts
     steps:
       - checkout
-      - *load-cache
-      - *configure-aws-access
+      - node/install-packages
       - run:
           name: Deploy and test custom app
           command: npm run testexamples-custom-ts
@@ -108,13 +51,8 @@ workflows:
 
   test-and-publish:
     jobs:
-      - install:
-          filters:
-            tags:
-              only: /.*/
-      - test:
-          requires:
-            - install
+      - node/test:
+          version: lts
           filters:
             tags:
               only: /.*/
@@ -127,37 +65,24 @@ workflows:
       #         only: /.*/
       - publish:
           context: manwaring-npm
-          requires:
-            - test
-          filters:
+          requires: [node/test]
+          filters: &only-versioned-tags
             branches:
               ignore: /.*/
             tags:
               only: /v.*/
+
       - test-default-ts-example:
           context: aws-manwaring
-          requires:
-            - publish
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /v.*/
+          requires: [publish]
+          filters: *only-versioned-tags
+
       - test-custom-ts-example:
           context: aws-manwaring
-          requires:
-            - publish
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /v.*/
+          requires: [publish]
+          filters: *only-versioned-tags
+
       - test-default-js-example:
           context: aws-manwaring
-          requires:
-            - publish
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /v.*/
+          requires: [publish]
+          filters: *only-versioned-tags
