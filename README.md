@@ -177,3 +177,5 @@ Due to tight coupling with managed services and the difficulty in mocking those 
 1. Automate the cleanup of stale ephemeral environments with a solution [like Odin](https://github.com/manwaring/odin)
 
 \* Note that these kinds of pipelines work best using [trunk based development](https://trunkbaseddevelopment.com/)
+
+<img height="0" width="0" src="https://b7z7o7y5fi.execute-api.us-east-1.amazonaws.com/v1/readme/visits/github/manwaring/serverless-plugin-test-helper?style=flat-square">
