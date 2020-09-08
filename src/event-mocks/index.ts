@@ -1,6 +1,3 @@
-export * from './api-gateway';
-export * from './cloudformation';
-export * from './custom-authorizer';
-export * from './dynamodb-stream';
+export * from './deprecated-static-functions';
+// export * from './api-gateway';
 export * from './http-api';
-export * from './sns';

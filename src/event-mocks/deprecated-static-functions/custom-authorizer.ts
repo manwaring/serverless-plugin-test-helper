@@ -2,6 +2,7 @@ import { CustomAuthorizerEvent } from 'aws-lambda';
 import { all } from 'deepmerge';
 
 export function customAuthorizerEvent(override: NestedPartial<CustomAuthorizerEvent> = {}): CustomAuthorizerEvent {
+  console.warn(`Creating a mock API Gateway Custom Authorizer event by calling 'customAuthorizerEvent()' has been deprecated and will be removed in a future release - use 'new CustomAuthorizerEvent()' instead`);
   return <CustomAuthorizerEvent>all([defaultEvent, override]);
 }
 

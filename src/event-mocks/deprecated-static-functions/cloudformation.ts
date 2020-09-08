@@ -4,6 +4,7 @@ import { all } from 'deepmerge';
 export function cloudFormationCustomResourceEvent(
   override: NestedPartial<CloudFormationCustomResourceEvent> = {}
 ): CloudFormationCustomResourceEvent {
+  console.warn(`Creating a mock CloudFormation Custom Resource event by calling 'cloudFormationCustomResourceEvent()' has been deprecated and will be removed in a future release - use 'new CloudFormationCustomResourceEvent()' instead`);
   return <CloudFormationCustomResourceEvent>all([defaultEvent, override]);
 }
 

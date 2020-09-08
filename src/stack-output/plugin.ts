@@ -2,6 +2,7 @@ import { ok, deepStrictEqual } from 'assert';
 import { StackOutputFile } from './file';
 
 export const DEFAULT_OUTPUTS_PATH: string = '.serverless/stack-output/outputs.yml';
+export const DEFAULT_OUTPUTS_PATHS: string[] = [DEFAULT_OUTPUTS_PATH,'.serverless/stack-output/outputs.json'];
 
 export class StackOutputPlugin {
   public hooks: {};
@@ -54,7 +55,9 @@ export class StackOutputPlugin {
     if (this.config && this.config.path) {
       this.saveStackOutputToPath(this.config.path, data);
     }
-    this.saveStackOutputToPath(DEFAULT_OUTPUTS_PATH, data);
+    for (const path of DEFAULT_OUTPUTS_PATHS) {
+      this.saveStackOutputToPath(path, data)
+    }
   }
 
   private saveStackOutputToPath(path: string, data: object) {

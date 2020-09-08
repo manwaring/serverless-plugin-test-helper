@@ -2,6 +2,7 @@ import { SNSEvent, SNSEventRecord } from 'aws-lambda';
 import { all } from 'deepmerge';
 
 export function snsEvent(override: NestedPartial<SNSEvent> = {}): SNSEvent {
+  console.warn(`Creating a mock SNS event by calling 'snsEvent()' has been deprecated and will be removed in a future release - use 'new SnsEvent()' instead`);
   const Records = override.Records
     ? all([defaultRecords, override.Records], { arrayMerge: combineMerge })
     : defaultRecords;

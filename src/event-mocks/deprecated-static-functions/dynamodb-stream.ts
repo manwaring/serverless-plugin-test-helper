@@ -2,6 +2,7 @@ import { DynamoDBStreamEvent, DynamoDBRecord } from 'aws-lambda';
 import { all } from 'deepmerge';
 
 export function dynamoDBStreamEvent(override: NestedPartial<DynamoDBStreamEvent> = {}): DynamoDBStreamEvent {
+  console.warn(`Creating a mock DynamoDB Stream event by calling 'dynamoDBStreamEvent()' has been deprecated and will be removed in a future release - use 'new DynamoDBStreamEvent()' instead`);
   const Records = override.Records
     ? all([defaultRecords, override.Records], { arrayMerge: combineMerge })
     : defaultRecords;
