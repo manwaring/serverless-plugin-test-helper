@@ -1,4 +1,4 @@
-import { snsEvent } from './sns';
+import { snsEvent } from './deprecated-sns';
 
 describe('SNS event', () => {
   it('Overrides properties correctly', () => {

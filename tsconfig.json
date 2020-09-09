@@ -1,13 +1,24 @@
 {
   "compilerOptions": {
     "target": "es6",
-    "lib": ["es2017", "es7", "es6"],
+    "lib": [
+      "es2017",
+      "es7",
+      "es6"
+    ],
     "module": "commonjs",
     "declaration": false,
     "experimentalDecorators": true,
     "esModuleInterop": true,
     "inlineSourceMap": true,
-    "typeRoots": ["node_modules/@types", "typings"]
+    "typeRoots": [
+      "node_modules/@types",
+      "typings"
+    ]
   },
-  "exclude": ["node_modules", "dist", "examples"]
+  "exclude": [
+    "node_modules",
+    "dist",
+    "examples"
+  ]
 }

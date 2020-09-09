@@ -1,4 +1,4 @@
-import { apiGatewayEvent } from './api-gateway';
+import { apiGatewayEvent } from './deprecated-api-gateway';
 
 describe('API Gateway event', () => {
   it('Overrides properties correctly', () => {

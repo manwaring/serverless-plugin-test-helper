@@ -1,4 +1,4 @@
-import { cloudFormationCustomResourceEvent } from './cloudformation';
+import { cloudFormationCustomResourceEvent } from './deprecated-cloudformation';
 
 describe('CloudFormation Custom Resource event', () => {
   it('Overrides properties correctly', () => {

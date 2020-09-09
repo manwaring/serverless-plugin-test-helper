@@ -1,4 +1,4 @@
-import { customAuthorizerEvent } from './custom-authorizer';
+import { customAuthorizerEvent } from './deprecated-custom-authorizer';
 
 describe('Custom Authorizer event', () => {
   it('Overrides properties correctly', () => {

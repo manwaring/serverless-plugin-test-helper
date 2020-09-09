@@ -1,100 +1,72 @@
 import { all } from 'deepmerge';
+import { APIGatewayEvent } from 'aws-lambda';
 
-// source: https://serverless.com/framework/docs/providers/aws/events/apigateway/#example-lambda-proxy-event-default
-export class ApiGatewayEvent {
-	resource: string;
-	path: string;
+// source: https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/aws-lambda/common/api-gateway.d.ts
+export class ApiGatewayEvent implements APIGatewayEvent {
+	body: string | null;
+	headers: { [name: string]: string };
+	multiValueHeaders: { [name: string]: string[] };
 	httpMethod: string;
-	auth: {
-		claims: {
-			aud: string;
-			azp: string;
-			exp: string;
-			gty: string;
-			iat: string;
-			iss: string;
-			sub: string;
-		}
-		scopes: any;
-	}
-	headers: {
-		[key: string]: any;
-	}
-	queryStringParameters: null;
-	pathParameters: null;
-	stageVariables: null;
+	isBase64Encoded: boolean;
+	path: string;
+	pathParameters: { [name: string]: string } | null;
+	queryStringParameters: { [name: string]: string } | null;
+	multiValueQueryStringParameters: { [name: string]: string[] } | null;
+	stageVariables: { [name: string]: string } | null;
 	requestContext: {
-		path: string;
 		accountId: string;
-		authorizer: undefined;
-		protocol: undefined;
-		resourceId: string;
+		apiId: string;
+		authorizer: { [name: string]: any } | null;
+		connectedAt?: number;
+		connectionId?: string;
+		domainName?: string;
+		domainPrefix?: string;
+		eventType?: string;
+		extendedRequestId?: string;
+		protocol: string;
+		httpMethod: string;
+		identity: {
+			accessKey: string | null;
+			accountId: string | null;
+			apiKey: string | null;
+			apiKeyId: string | null;
+			caller: string | null;
+			cognitoAuthenticationProvider: string | null;
+			cognitoAuthenticationType: string | null;
+			cognitoIdentityId: string | null;
+			cognitoIdentityPoolId: string | null;
+			principalOrgId: string | null;
+			sourceIp: string;
+			user: string | null;
+			userAgent: string | null;
+			userArn: string | null;
+		};
+		messageDirection?: string;
+		messageId?: string | null;
+		path: string;
 		stage: string;
 		requestId: string;
-		requestTimeEpoch: null;
-		identity: {
-			cognitoIdentityPoolId: null;
-			accountId: null;
-			cognitoIdentityId: null;
-			caller: null;
-			apiKey: string;
-			sourceIp: string;
-			accessKey: null;
-			cognitoAuthenticationType: null;
-			cognitoAuthenticationProvider: null;
-			userArn: null;
-			userAgent: string; user: null;
-			apiKeyId: null;
-			principalOrgId: null;
-		};
+		requestTime?: string;
+		requestTimeEpoch: number;
+		resourceId: string;
 		resourcePath: string;
-		httpMethod: string;
-		apiId: string;
+		routeKey?: string;
 	};
-	body: string;
-	isBase64Encoded: boolean;
-	multiValueHeaders: null;
-	multiValueQueryStringParameters: null;
+	resource: string;
 
 	constructor(override: NestedPartial<ApiGatewayEvent> = {}) {
-		const extended = <ExtendedAPIGatewayEvent>all([defaultEvent, override]);
+		const extended = <ApiGatewayEvent>all([defaultEvent, override]);
 		for (const [key, value] of Object.entries(extended)) {
 			this[key] = value;
 		}
 	}
 }
 
-export interface ExtendedAPIGatewayEvent extends ApiGatewayEvent {
-	auth: {
-		claims: {
-			aud: string;
-			azp: string;
-			exp: string;
-			gty: string;
-			iat: string;
-			iss: string;
-			sub: string;
-		};
-		scopes: any;
-	};
-}
-
-const defaultEvent: ExtendedAPIGatewayEvent = {
+// source: https://serverless.com/framework/docs/providers/aws/events/apigateway/#example-lambda-proxy-event-default
+const defaultEvent: ApiGatewayEvent = {
 	resource: '/',
 	path: '/',
 	httpMethod: 'POST',
-	auth: {
-		claims: {
-			aud: 'aud',
-			azp: 'azp',
-			exp: '123',
-			gty: 'client-credentials',
-			iat: '123',
-			iss: 'url',
-			sub: 'uniqueid',
-		},
-		scopes: null,
-	},
 	headers: {
 		Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
 		'Accept-Encoding': 'gzip, deflate, br',
@@ -120,7 +92,7 @@ const defaultEvent: ExtendedAPIGatewayEvent = {
 		'X-Forwarded-Port': '443',
 		'X-Forwarded-Proto': 'https',
 	},
-	queryStringParameters: null,
+	queryStringParameters: { key: 'value' },
 	pathParameters: null,
 	stageVariables: null,
 	requestContext: {

@@ -1,4 +1,4 @@
-import { dynamoDBStreamEvent } from './dynamodb-stream';
+import { dynamoDBStreamEvent } from './deprecated-dynamodb-stream';
 
 describe('DynamoDB Stream event', () => {
   it('Overrides properties correctly', () => {

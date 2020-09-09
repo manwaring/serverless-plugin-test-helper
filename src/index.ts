@@ -7,7 +7,9 @@ import {
   snsEvent,
   customAuthorizerEvent,
   cloudFormationCustomResourceEvent,
+  ApiGatewayEvent,
   HttpApiEvent,
+
 } from './event-mocks';
 
 // Need to set it up this way so that there is a default export so that the serverless plugin works as well as the function exports (which can be imported into a project)
@@ -22,9 +24,14 @@ module.exports.getOutput = getOutput;
 
 // Lambda signature/event helpers
 module.exports.context = context;
+
+// Deprecated static method event mocks
 module.exports.apiGatewayEvent = apiGatewayEvent;
 module.exports.cloudFormationCustomResourceEvent = cloudFormationCustomResourceEvent;
 module.exports.customAuthorizerEvent = customAuthorizerEvent;
 module.exports.dynamoDBStreamEvent = dynamoDBStreamEvent;
-module.exports.HttpApiEvent = HttpApiEvent;
 module.exports.snsEvent = snsEvent;
+
+// Class-based event mocks
+module.exports.ApiGatewayEvent = ApiGatewayEvent;
+module.exports.HttpApiEvent = HttpApiEvent;
