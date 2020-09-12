@@ -14,9 +14,7 @@
     <img src="https://flat.badgen.net/packagephobia/install/serverless-plugin-test-helper"></a>
   <a href="https://www.npmjs.com/package/serverless-plugin-test-helper">
     <img src="https://flat.badgen.net/npm/license/serverless-plugin-test-helper"></a>
-</p>
-
-<p align="center">
+  <br/>
   <a href="https://circleci.com/gh/manwaring/serverless-plugin-test-helper">
     <img src="https://flat.badgen.net/circleci/github/manwaring/serverless-plugin-test-helper/master?icon=circleci"></a>
   <a href="https://flat.badgen.net/dependabot/manwaring/serverless-plugin-test-helper">
@@ -25,6 +23,7 @@
     <img src="https://flat.badgen.net/david/dep/manwaring/serverless-plugin-test-helper"></a>
   <a href="https://david-dm.org/manwaring/serverless-plugin-test-helper?type=dev">
     <img src="https://flat.badgen.net/david/dev/manwaring/serverless-plugin-test-helper/?label=dev+dependencies"></a>
+  <img height="0" width="0" src="https://b7z7o7y5fi.execute-api.us-east-1.amazonaws.com/v1/readme/visits/github/manwaring/serverless-plugin-test-helper?style=flat-square">
 </p>
 
 # Serverless plugin test helper
@@ -108,7 +107,7 @@ resources:
       Type: AWS::S3::Bucket
 ```
 
-See the [AWS CloudFormation documentation on outputs](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/outputs-section-structure.html) for more information
+See the [AWS CloudFormation documentation on outputs](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/outputs-section-structure.html) for more information.
 
 # AWS event mocks
 
@@ -177,5 +176,3 @@ Due to tight coupling with managed services and the difficulty in mocking those 
 1. Automate the cleanup of stale ephemeral environments with a solution [like Odin](https://github.com/manwaring/odin)
 
 \* Note that these kinds of pipelines work best using [trunk based development](https://trunkbaseddevelopment.com/)
-
-<img height="0" width="0" src="https://b7z7o7y5fi.execute-api.us-east-1.amazonaws.com/v1/readme/visits/github/manwaring/serverless-plugin-test-helper?style=flat-square">
