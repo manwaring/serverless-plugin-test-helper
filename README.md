@@ -14,9 +14,7 @@
     <img src="https://flat.badgen.net/packagephobia/install/serverless-plugin-test-helper"></a>
   <a href="https://www.npmjs.com/package/serverless-plugin-test-helper">
     <img src="https://flat.badgen.net/npm/license/serverless-plugin-test-helper"></a>
-</p>
-
-<p align="center">
+  <br/>
   <a href="https://circleci.com/gh/manwaring/serverless-plugin-test-helper">
     <img src="https://flat.badgen.net/circleci/github/manwaring/serverless-plugin-test-helper/master?icon=circleci"></a>
   <a href="https://flat.badgen.net/dependabot/manwaring/serverless-plugin-test-helper">
