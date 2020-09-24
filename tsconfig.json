@@ -7,7 +7,6 @@
       "es6"
     ],
     "module": "commonjs",
-    "declaration": false,
     "experimentalDecorators": true,
     "esModuleInterop": true,
     "inlineSourceMap": true,
