@@ -22,4 +22,10 @@ describe('HTTP API event', () => {
     expect(event.requestContext.http.method).toEqual('POST');
     expect(event.headers['content-type']).toEqual('application/json');
   });
+
+  it('Parses the payload correctly', () => {
+    const event = new HttpApiEvent();
+    const body = JSON.parse(event.body);
+    expect(body.message).toBeTruthy();
+  });
 });

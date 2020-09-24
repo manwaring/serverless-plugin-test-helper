@@ -96,7 +96,7 @@ const defaultEvent: ExtendedAPIGatewayEvent = {
     httpMethod: 'POST',
     apiId: 'j3azlsj0c4',
   },
-  body: 'postcode=LS17FR',
+  body: "{ \"message\": \"hello from lambda\" }",
   isBase64Encoded: false,
   multiValueHeaders: null,
   multiValueQueryStringParameters: null,

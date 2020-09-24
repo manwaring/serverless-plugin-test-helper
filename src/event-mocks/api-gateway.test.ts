@@ -22,4 +22,10 @@ describe('API Gateway event', () => {
     expect(event.headers['content-type']).toEqual('application/json');
     expect(event.queryStringParameters).toEqual(null);
   });
+
+  it('Parses the payload correctly', () => {
+    const event = apiGatewayEvent();
+    const body = JSON.parse(event.body);
+    expect(body.message).toBeTruthy();
+  });
 });
