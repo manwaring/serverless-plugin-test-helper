@@ -83,7 +83,7 @@ const BUCKET_NAME = getDeploymentBucket();
 const DOCUMENT_STORAGE_BUCKET_NAME = getOutput('DocumentStorageBucket');
 ```
 
-- `getApiGatewayUrl()` returns the url of the deployed API Gateway service (if using `http` as an event type in `serverless.yml`)
+- `getApiGatewayUrl()` returns the url of the deployed API Gateway service (if using `http` or `httpApi` as an event type in `serverless.yml`)
 - `getDeploymentBucket()` returns the name of the bucket Serverless Framework generates for uploading CloudFormation templates and zipped source code files as part of the `sls deploy` process
 - `getOutput('[output key]')` returns the value of the Cloudformation stack output with the specified key\*
 
