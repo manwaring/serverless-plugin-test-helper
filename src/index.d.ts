@@ -1,11 +1,20 @@
 import {
   Context,
   APIGatewayEvent,
-  DynamoDBStreamEvent,
-  SNSEvent,
+  DynamoDBStreamEvent as DynamoDBStream,
+  SNSEvent as SNS,
   CustomAuthorizerEvent,
   CloudFormationCustomResourceEvent,
-} from 'aws-lambda';
+  APIGatewayEventRequestContextWithAuthorizer,
+  APIGatewayProxyEventHeaders,
+  APIGatewayProxyEventMultiValueHeaders,
+  APIGatewayProxyEventMultiValueQueryStringParameters,
+  APIGatewayProxyEventPathParameters,
+  APIGatewayProxyEventQueryStringParameters,
+  APIGatewayProxyEventStageVariables,
+  SNSEventRecord,
+  DynamoDBRecord,
+} from "aws-lambda";
 export interface ExtendedAPIGatewayEvent extends APIGatewayEvent {
   auth: {
     claims: {
@@ -34,8 +43,39 @@ export function cloudFormationCustomResourceEvent(
   override?: NestedPartial<CloudFormationCustomResourceEvent>
 ): CloudFormationCustomResourceEvent;
 export function customAuthorizerevent(override?: NestedPartial<CustomAuthorizerEvent>): CustomAuthorizerEvent;
-export function dynamoDBStreamEvent(override?: NestedPartial<DynamoDBStreamEvent>): DynamoDBStreamEvent;
-export function snsEvent(override?: NestedPartial<SNSEvent>): SNSEvent;
+export function dynamoDBStreamEvent(override?: NestedPartial<DynamoDBStream>): DynamoDBStream;
+export function snsEvent(override?: NestedPartial<SNS>): SNS;
+
+export class DynamoDBStreamEvent implements DynamoDBStream {
+  Records: DynamoDBRecord[];
+  constructor(override?: NestedPartial<DynamoDBStream>);
+}
+
+export class SNSEvent implements SNS {
+  Records: SNSEventRecord[];
+  constructor(override?: NestedPartial<SNS>);
+}
+
+export class ApiGatewayEvent implements ExtendedAPIGatewayEvent {
+  auth: {
+    claims: { aud: string; azp: string; exp: string; gty: string; iat: string; iss: string; sub: string };
+    scopes: any;
+  };
+  body: string;
+  headers: APIGatewayProxyEventHeaders;
+  multiValueHeaders: APIGatewayProxyEventMultiValueHeaders;
+  httpMethod: string;
+  isBase64Encoded: boolean;
+  path: string;
+  pathParameters: APIGatewayProxyEventPathParameters;
+  queryStringParameters: APIGatewayProxyEventQueryStringParameters;
+  multiValueQueryStringParameters: APIGatewayProxyEventMultiValueQueryStringParameters;
+  stageVariables: APIGatewayProxyEventStageVariables;
+  requestContext: APIGatewayEventRequestContextWithAuthorizer<{ [name: string]: any }>;
+  resource: string;
+  constructor(override?: NestedPartial<ExtendedAPIGatewayEvent>);
+}
+
 export class HttpApiEvent {
   version: string;
   routeKey: string;

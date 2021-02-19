@@ -1,7 +1,7 @@
 {
   "name": "serverless-plugin-test-helper",
   "description": "A utility library to help with testing deployed serverless applications",
-  "version": "2.5.0",
+  "version": "2.6.0",
   "scripts": {
     "publish-please-dry-run": "publish-please --dry-run",
     "publish-please": "publish-please",
@@ -29,7 +29,7 @@
     "@types/jest": "^26.0.20",
     "@types/lodash": "^4.14.168",
     "@types/lodash.clonedeep": "^4.5.6",
-    "@types/node": "^14.14.30",
+    "@types/node": "^14.14.31",
     "@typescript-eslint/eslint-plugin": "^4.15.1",
     "@typescript-eslint/parser": "^4.15.1",
     "babel-jest": "^26.6.3",

@@ -115,23 +115,23 @@ Import the helper functions and static objects into your test files to generate 
 
 ```ts
 import {
-  apiGatewayEvent,
+  ApiGatewayEvent,
   cloudFormationCustomResourceEvent,
   customAuthorizerEvent,
-  dynamoDBStreamEvent,
+  DynamoDBStreamEvent,
   HttpApiEvent,
-  snsEvent,
+  SNSEvent,
   context
 } from 'serverless-plugin-test-helper';
 import { handler } from './lambda-being-tested';
 
 // Setup events with optional value overrides
-const event = apiGatewayEvent({ body: 'overridden body value' });
+const event = new ApiGatewayEvent({ body: 'overridden body value' });
 const event2 = cloudFormationCustomResourceEvent();
 const event3 = customAuthorizerEvent();
-const event4 = dynamoDBStreamEvent();
+const event4 = new DynamoDBStreamEvent();
 const event5 = new HttpApiEvent();
-const event6 = snsEvent();
+const event6 = new SNSEvent();
 
 ...
 
