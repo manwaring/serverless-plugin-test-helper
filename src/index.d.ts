@@ -2,8 +2,9 @@ import {
   Context,
   APIGatewayEvent,
   DynamoDBStreamEvent as DynamoDBStream,
-  SNSEvent as SNS,
+  SNSEvent,
   CustomAuthorizerEvent,
+  APIGatewayTokenAuthorizerEvent as APIGatewayTokenAuthorizer,
   CloudFormationCustomResourceEvent,
   APIGatewayEventRequestContextWithAuthorizer,
   APIGatewayProxyEventHeaders,
@@ -44,16 +45,23 @@ export function cloudFormationCustomResourceEvent(
 ): CloudFormationCustomResourceEvent;
 export function customAuthorizerevent(override?: NestedPartial<CustomAuthorizerEvent>): CustomAuthorizerEvent;
 export function dynamoDBStreamEvent(override?: NestedPartial<DynamoDBStream>): DynamoDBStream;
-export function snsEvent(override?: NestedPartial<SNS>): SNS;
+export function snsEvent(override?: NestedPartial<SNSEvent>): SNSEvent;
+
+export class ApiGatewayTokenAuthorizerEvent implements APIGatewayTokenAuthorizer {
+  type: "TOKEN";
+  methodArn: string;
+  authorizationToken: string;
+  constructor(override?: NestedPartial<APIGatewayTokenAuthorizer>);
+}
 
 export class DynamoDBStreamEvent implements DynamoDBStream {
   Records: DynamoDBRecord[];
   constructor(override?: NestedPartial<DynamoDBStream>);
 }
 
-export class SNSEvent implements SNS {
+export class SnsEvent implements SNSEvent {
   Records: SNSEventRecord[];
-  constructor(override?: NestedPartial<SNS>);
+  constructor(override?: NestedPartial<SNSEvent>);
 }
 
 export class ApiGatewayEvent implements ExtendedAPIGatewayEvent {

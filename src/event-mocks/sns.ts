@@ -1,4 +1,4 @@
-import { SNSEvent as SNS, SNSEventRecord } from "aws-lambda";
+import { SNSEvent, SNSEventRecord } from "aws-lambda";
 import { all } from "deepmerge";
 
 /*
@@ -26,9 +26,9 @@ function combineMerge(target, source, options) {
   return destination;
 }
 
-export class SNSEvent {
+export class SnsEvent {
   Records: SNSEventRecord[];
-  constructor(override: NestedPartial<SNS> = {}) {
+  constructor(override: NestedPartial<SNSEvent> = {}) {
     const Records = override.Records
       ? all([defaultRecords, override.Records], { arrayMerge: combineMerge })
       : defaultRecords;

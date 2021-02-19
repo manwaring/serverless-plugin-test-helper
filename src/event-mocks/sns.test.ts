@@ -1,4 +1,4 @@
-import { snsEvent, SNSEvent } from "./sns";
+import { snsEvent, SnsEvent } from "./sns";
 
 describe("SNS event function", () => {
   it("Overrides properties correctly", () => {
@@ -38,14 +38,14 @@ describe("SNS event class", () => {
         },
       ],
     };
-    const event = new SNSEvent(override);
+    const event = new SnsEvent(override);
     expect(event.Records[0].Sns.Message).toEqual("updated message");
     expect(event.Records[0].Sns.Subject).toEqual("updated subject");
     expect(event.Records[0].Sns.Type).toEqual("Notification");
   });
 
   it("Returns default object when no overrides are specified", () => {
-    const event = new SNSEvent();
+    const event = new SnsEvent();
     expect(event.Records[0].Sns.Message).toEqual("hello world");
     expect(event.Records[0].Sns.Subject).toEqual("");
     expect(event.Records[0].Sns.Type).toEqual("Notification");
