@@ -1,4 +1,4 @@
-import { writeFileSync, mkdirSync } from 'fs';
+import { writeFileSync, mkdirSync } from "fs";
 
 export class StackOutputFile {
   private path: string;
@@ -8,8 +8,8 @@ export class StackOutputFile {
 
   constructor(path: string, data: object) {
     this.path = path;
-    this.directory = path && path.match(/.*\//) ? path.match(/.*\//)[0] : '';
-    this.extension = (path && path.split('.').pop()) || '';
+    this.directory = path && path.match(/.*\//) ? path.match(/.*\//)[0] : "";
+    this.extension = (path && path.split(".").pop()) || "";
     this.data = this.format(data);
   }
 
@@ -26,11 +26,11 @@ export class StackOutputFile {
 
   private format(data: object) {
     switch (this.extension.toUpperCase()) {
-      case 'JSON':
+      case "JSON":
         return JSON.stringify(data, null, 2);
-      case 'YAML':
-      case 'YML':
-        return require('js-yaml').safeDump(data, { lineWidth: 240 });
+      case "YAML":
+      case "YML":
+        return require("js-yaml").dump(data, { lineWidth: 240 });
       default:
         throw new Error(`No formatter found for '${this.extension}' extension`);
     }

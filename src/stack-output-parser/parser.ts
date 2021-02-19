@@ -1,4 +1,4 @@
-import { safeLoad } from "js-yaml";
+import { load } from "js-yaml";
 import { readFileSync } from "fs";
 import { DEFAULT_OUTPUTS_PATH } from "../stack-output/plugin";
 
@@ -27,7 +27,7 @@ export function getOutput(key: string): string {
   if (process.env.DEBUG) {
     console.log(`Retrieving the ${key} property from stack output in the ${DEFAULT_OUTPUTS_PATH} file`);
   }
-  const localFile = safeLoad(readFileSync(DEFAULT_OUTPUTS_PATH, "utf-8"));
+  const localFile = load(readFileSync(DEFAULT_OUTPUTS_PATH, "utf-8"));
   const matching = Object.keys(localFile).find((k) => k.toUpperCase() === key.toUpperCase());
   return matching ? localFile[matching] : undefined;
 }
