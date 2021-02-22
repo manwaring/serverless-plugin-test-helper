@@ -24,6 +24,7 @@ jobs:
       - checkout
       - node/install-packages:
           app-dir: examples/custom-ts
+          override-ci-command: npm i
       - run:
           name: Deploy and test custom app
           command: npm run testexamples-custom-ts
