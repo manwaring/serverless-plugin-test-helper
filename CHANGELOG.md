@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/), 
 ### Changed
 
 - Updated documentation
+- Update example projects: only use default TypeScript project for easier maintenance, and switch from Cucumber to Jest
 
 ## [2.6.0]&nbsp;&nbsp;(2021-02-19)
 
