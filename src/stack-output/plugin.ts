@@ -1,14 +1,15 @@
-import { ok, deepStrictEqual } from 'assert';
-import { StackOutputFile } from './file';
+import { ok, deepStrictEqual } from "assert";
+import { StackOutputFile } from "./file";
 
-export const DEFAULT_OUTPUTS_PATH: string = '.serverless/stack-output/outputs.yml';
+export const DEFAULT_OUTPUTS_PATH = ".serverless/stack-output/outputs.yml";
 
 export class StackOutputPlugin {
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public hooks: {};
   private config: TestHelperConfig;
 
   constructor(private serverless: Serverless, private options: Serverless.Options) {
-    this.hooks = { 'after:deploy:deploy': this.getAndSaveStackOutput.bind(this) };
+    this.hooks = { "after:deploy:deploy": this.getAndSaveStackOutput.bind(this) };
     this.config = serverless.service.custom ? serverless.service.custom.testHelper : {};
   }
 
@@ -24,20 +25,20 @@ export class StackOutputPlugin {
   }
 
   private validate() {
-    ok(this.serverless, 'Invalid serverless configuration');
-    ok(this.serverless.service, 'Invalid serverless configuration');
-    ok(this.serverless.service.provider, 'Invalid serverless configuration');
-    ok(this.serverless.service.provider.name, 'Invalid serverless configuration');
-    deepStrictEqual(this.serverless.service.provider.name, 'aws', 'Only supported for AWS provider');
-    ok(this.options && !this.options.noDeploy, 'Skipping deployment with --noDeploy flag');
+    ok(this.serverless, "Invalid serverless configuration");
+    ok(this.serverless.service, "Invalid serverless configuration");
+    ok(this.serverless.service.provider, "Invalid serverless configuration");
+    ok(this.serverless.service.provider.name, "Invalid serverless configuration");
+    deepStrictEqual(this.serverless.service.provider.name, "aws", "Only supported for AWS provider");
+    ok(this.options && !this.options.noDeploy, "Skipping deployment with --noDeploy flag");
   }
 
   private getStackOutput(): Promise<StackDescriptionList> {
-    const aws = this.serverless.getProvider('aws');
+    const aws = this.serverless.getProvider("aws");
     const stage = aws.getStage();
     const region = aws.getRegion();
     const StackName = aws.naming.getStackName();
-    return aws.request('CloudFormation', 'describeStacks', { StackName }, stage, region);
+    return aws.request("CloudFormation", "describeStacks", { StackName }, stage, region);
   }
 
   private formatStackOutput(data: { Stacks: Array<{ Outputs: StackOutputPair[] }> }) {
@@ -50,6 +51,7 @@ export class StackOutputPlugin {
     );
   }
 
+  // eslint-disable-next-line @typescript-eslint/ban-types
   private saveStackOutput(data: object) {
     if (this.config && this.config.path) {
       this.saveStackOutputToPath(this.config.path, data);
@@ -57,6 +59,7 @@ export class StackOutputPlugin {
     this.saveStackOutputToPath(DEFAULT_OUTPUTS_PATH, data);
   }
 
+  // eslint-disable-next-line @typescript-eslint/ban-types
   private saveStackOutputToPath(path: string, data: object) {
     const file = new StackOutputFile(path, data);
     file.save();

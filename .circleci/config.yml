@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  node: circleci/node@3.0.0
+  node: circleci/node@4.1.1
 
 jobs:
   publish:
@@ -18,29 +18,12 @@ jobs:
           name: Publish on npm
           command: npm run publish-please
 
-  test-default-ts-example:
-    executor: *node-lts
-    steps:
-      - checkout
-      - node/install-packages
-      - run:
-          name: Deploy and test default example app
-          command: npm run testexamples-default-ts
-
-  test-default-js-example:
-    executor: *node-lts
-    steps:
-      - checkout
-      - node/install-packages
-      - run:
-          name: Deploy and test default example app
-          command: npm run testexamples-default-js
-
   test-custom-ts-example:
     executor: *node-lts
     steps:
       - checkout
-      - node/install-packages
+      - node/install-packages:
+          app-dir: examples/custom-ts
       - run:
           name: Deploy and test custom app
           command: npm run testexamples-custom-ts
@@ -65,17 +48,7 @@ workflows:
             tags:
               only: /v.*/
 
-      - test-default-ts-example:
-          context: aws-manwaring
-          requires: [publish]
-          filters: *only-versioned-tags
-
       - test-custom-ts-example:
-          context: aws-manwaring
-          requires: [publish]
-          filters: *only-versioned-tags
-
-      - test-default-js-example:
           context: aws-manwaring
           requires: [publish]
           filters: *only-versioned-tags

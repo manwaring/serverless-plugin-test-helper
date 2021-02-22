@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html)
 
+## [2.6.1]&nbsp;&nbsp;(2021-02-19)
+
+### Changed
+
+- Updated documentation
+
+## [2.6.0]&nbsp;&nbsp;(2021-02-19)
+
+### Added
+
+- Migrate remaining event mocks to use classes instead of functions
+
 ## [2.5.0]&nbsp;&nbsp;(2020-12-28)
 
 ### Changed
@@ -220,6 +232,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/), 
 - Clarify project intent and provide additional examples in README
 - Publish now happens from git tags instead of master merges
 
+[2.6.0]: https://github.com/manwaring/serverless-plugin-test-helper/compare/v2.5.0...v2.6.0
 [2.5.0]: https://github.com/manwaring/serverless-plugin-test-helper/compare/v2.4.5...v2.5.0
 [2.4.5]: https://github.com/manwaring/serverless-plugin-test-helper/compare/v2.4.4...v2.4.5
 [2.4.4]: https://github.com/manwaring/serverless-plugin-test-helper/compare/v2.4.3...v2.4.4

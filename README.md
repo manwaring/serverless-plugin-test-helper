@@ -30,12 +30,12 @@
 
 1. [Overview](#overview)
 1. [Installation and setup](#installation-and-setup)
-   1. [E2E testing support setup & configuration](#e2e-testing-support-setup--configuration)
-   1. [AWS event mocks](#aws-event-mocks)
+1. [E2E testing support setup & configuration](#e2e-testing-support-setup--configuration)
+1. [AWS event mocks](#aws-event-mocks)
 1. [Examples](#examples)
 1. [An opinionated approach to serverless testing](#an-opinionated-approach-to-serverless-testing)
 
-_Feedback is appreciated! If you have an idea for how this plugin can be improved [please open an issue](https://github.com/manwaring/serverless-plugin-test-helper/issues/new)._
+_Feedback is appreciated! If you have an idea for how this plugin/library can be improved (or even just a complaint/criticism) then please [open an issue](https://github.com/manwaring/serverless-plugin-test-helper/issues/new)._
 
 # Overview
 
@@ -49,29 +49,31 @@ Install and save the library to `package.json` as a dev dependency:
 
 `npm i --save-dev serverless-plugin-test-helper`
 
+`yarn add serverless-plugin-test-helper -D`
+
 # E2E testing support setup & configuration
 
-This portion of the library includes the following two components.
+Two parts of this library work together to support E2E testing of your deployed serverless apps:
 
-1. A [Serverless Framework plugin](https://github.com/serverless/plugins) which extends `sls deploy` to save a copy of the generated CloudFormation Stack Output locally.
-1. A standard Node.js library which can be imported to access local stack output values in tests (or any other code you want to run post-deployment).
+1. A [Serverless Framework plugin](https://github.com/serverless/plugins) which extends `sls deploy` to save a copy of the generated CloudFormation Stack Output locally - this will persist the dynamically-generated API Gateway endpoint, for example.
+1. A standard Node.js library which can be imported to access local stack output values in tests (or any other code you want to run post-deployment) - this will allow you to access the dynamically-generated API Gateway endpoint that the plugin saved.
 
-To setup the plugin add the library to the `serverless.yml` plugins section:
+To setup the plugin add the library to the `serverless.yml` `plugins` section:
 
 ```yml
 plugins:
   - serverless-plugin-test-helper
 ```
 
-By default the plugin will generate a file containing stack outputs at `.serverless/stack-output/outputs.yml`, which is where the library pulls values from. You can optionally specify an additional path for storing outputs by using the `serverless.yml` custom section:
+By default the plugin will generate a file containing stack outputs at `.serverless/stack-output/outputs.yml`, which is where the library pulls values from. You can optionally specify an additional path for storing outputs by using the optional `serverless.yml` `custom` section with the `testHelper` key:
 
 ```yml
 custom:
-  testHelper: # This key is used by the plugin to pull in the optional path value
+  testHelper: # The 'testHelper' key is used by the plugin to pull in the optional path value
     path: optional/path/for/another/outputs[ .yml | .yaml | .json ]
 ```
 
-## Using the library to retrieve stack outputs
+### Using the library to retrieve stack outputs
 
 Import the helper functions into your test files to retrieve values from deployed stack output:
 
@@ -85,9 +87,9 @@ const DOCUMENT_STORAGE_BUCKET_NAME = getOutput('DocumentStorageBucket');
 
 - `getApiGatewayUrl()` returns the url of the deployed API Gateway service (if using `http` or `httpApi` as an event type in `serverless.yml`)
 - `getDeploymentBucket()` returns the name of the bucket Serverless Framework generates for uploading CloudFormation templates and zipped source code files as part of the `sls deploy` process
-- `getOutput('[output key]')` returns the value of the Cloudformation stack output with the specified key\*
+- `getOutput('output-key-from-stack-outputs')` returns the value of the Cloudformation stack output with the specified key
 
-\*To see what output values are available for reference you can check the generated `.serverless/stack-output/outputs.yml` file after a deployment. To make additional values available you can specify up to 60 CloudFormation Stack Outputs in `serverless.yml` using the resources > Outputs section:
+To see what output values are available for reference you can check the generated `.serverless/stack-output/outputs.yml` file after a deployment. To make additional values available you can specify up to 60 CloudFormation Stack Outputs in `serverless.yml` using the resources > Outputs section:
 
 ```yml
 resources:
@@ -107,7 +109,7 @@ resources:
       Type: AWS::S3::Bucket
 ```
 
-See the [AWS CloudFormation documentation on outputs](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/outputs-section-structure.html) for more information.
+See the [AWS CloudFormation documentation on outputs](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/outputs-section-structure.html) for more information on stack outputs.
 
 # AWS event mocks
 
@@ -143,24 +145,22 @@ const result2 = await handler(event2, context);
 
 # Examples
 
-There are [three working examples](examples) of how this library can be used in a simple 'hello world' serverless application:
+There is [one working example](examples) of how this library can be used in a simple 'hello world' serverless application:
 
-1. [Plugin with optional configurations in a TypeScript project](examples/custom-ts)
-1. [Using the default plugin configuration in a TypeScript project](examples/default-ts)
-1. [Using the default plugin configuration in a JavaScript project](examples/default-ts)
+1. [Plugin and event mocks in a TypeScript project with E2E and unit tests](examples/custom-ts)
 
 # Serverless testing best practices
 
 Due to tight coupling with managed services and the difficulty in mocking those same services locally, end-to-end testing is incredibly important for deploying and running serverless applications with confidence. I believe that a good serverless deployment pipeline setup should include the following steps, in order:
 
-## For checkins/merges to master branch\*
+## For checkins/merges to default branch\*
 
 1. Install project and dependencies
 1. Run unit tests
-1. Deploy to a static, non-production environment (using `--stage <environment>` option in Serverless Framework)†
+1. Deploy to a static, non-production environment like staging (using `--stage staging` option in Serverless Framework)†
 1. Run e2e tests in the static, non-production environment†
-1. Optional: include a manual step if want to gate production deploys
-1. Deploy to production environment (using `--stage production`)
+1. Optional: include a manual approval step if you want to gate production deploys
+1. Deploy to production environment (with `--stage production`)
 1. Run e2e tests in production
 
 † Repeat steps 3 and 4 for however many static, non-production environments you have (development, staging, demo, etc.)
@@ -169,8 +169,8 @@ Due to tight coupling with managed services and the difficulty in mocking those 
 
 1. Install project and dependencies
 1. Run unit tests
-1. Deploy to a dynamic, non-production environment (using `--stage <branch or username>` option in Serverless Framework)
+1. Deploy to a dynamic, non-production environment (with `--stage <branch or username>` option in Serverless Framework)
 1. Run e2e tests in the dynamic, non-production environment
-1. Automate the cleanup of stale ephemeral environments with a solution [like Odin](https://github.com/manwaring/odin)
+1. Automate the cleanup of stale ephemeral environments with a solution [like Odin](https://github.com/manwaring-automation/odin)
 
 \* Note that these kinds of pipelines work best using [trunk based development](https://trunkbaseddevelopment.com/)
