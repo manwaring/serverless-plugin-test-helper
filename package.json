@@ -62,7 +62,7 @@
   "bugs": {
     "url": "https://github.com/manwaring/serverless-plugin-test-helper"
   },
-  "homepage": "https://github.com/manwaring/serverless-plugin-test-helper",
+  "homepage": "https://github.com/manwaring/serverless-plugin-test-helper#readme",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
