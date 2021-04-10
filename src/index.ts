@@ -14,7 +14,9 @@ import {
   cloudFormationCustomResourceEvent,
 } from "./event-mocks";
 
+
 // Need to set it up this way so that there is a default export so that the serverless plugin works as well as the function exports (which can be imported into a project)
+// TODO find a way to not do this
 
 // Plugin for saving outputs file
 module.exports = StackOutputPlugin;
