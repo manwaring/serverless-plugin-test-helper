@@ -1,7 +1,7 @@
 {
   "name": "serverless-plugin-test-helper",
   "description": "A utility library to help with testing deployed serverless applications",
-  "version": "2.6.3",
+  "version": "2.6.4",
   "scripts": {
     "publish-please-dry-run": "publish-please --dry-run",
     "publish-please": "publish-please",
@@ -12,7 +12,7 @@
     "pretest": "rimraf .test-output .serverless dist",
     "posttest": "rimraf .test-output .serverless .test*",
     "codecov": "codecov -f coverage/*.json",
-    "testexamples-custom-ts": "cd examples/custom-ts && rm -rf node_modules package-lock.json && npm i && npm run deploy-and-test"
+    "testexamples-custom-ts": "cd examples/custom-ts && rm -rf node_modules package-lock.json && npm i && npm run deploy-and-test-and-remove"
   },
   "dependencies": {
     "deepmerge": "^4.2.2",
@@ -48,8 +48,7 @@
   },
   "lint-staged": {
     "./src/**/*.ts": [
-      "eslint --fix",
-      "git add ."
+      "eslint --fix"
     ]
   },
   "publishConfig": {
